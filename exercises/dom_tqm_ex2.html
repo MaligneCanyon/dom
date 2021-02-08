@@ -1,0 +1,35 @@
+<div id="1">
+  <h1 id="2">Hello, <em id="3">World</em></h1>
+  <p id="4">
+    Welcome to wonderland. This is an
+    <span id="5">awesome</span> place.
+  </p>
+  <a href="#" id="6"><strong id="7">Enter</strong></a>
+  <div id="8"><p id="9"><a href="#" id="10">Go back</a></p></div>
+</div>
+
+<script>
+  // - could use an IIFE
+  // - don't know the required output format;
+  //   using an arr of strs with format "id: directChildren, indirectChildren"
+  // - text and comment nodes don't have children
+
+  let arr = [];
+
+  function greatChildren(node, callback) {
+    node.grandchildren = 0; // adds a property to each node !
+    node.childNodes.forEach(child => node.grandchildren += greatChildren(child, callback));
+    callback(node);
+    return node.childNodes.length + node.grandchildren;
+  }
+
+  function cb(node) {
+    if (Number(node.id) > 0 && Number(node.id) < 11) {
+      arr[Number(node.id) - 1] = `${node.id}: ${node.childNodes.length}, ${node.grandchildren}`;
+      // console.log(`${node.id}: ${node.childNodes.length}, ${node.grandchildren}`); // not in desired order
+    }
+  }
+
+  greatChildren(document, cb);
+  console.log(arr);
+</script>

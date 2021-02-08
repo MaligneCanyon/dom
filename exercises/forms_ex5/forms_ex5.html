@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Multi-Choice Quiz</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../whitespace-reset.css" />
+    <link rel="stylesheet" href="forms_ex5.css" />
+    <script src="../../handlebars.min-v4.7.6.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <p>Multiple Choice Quiz</p>
+    </header>
+
+    <main>
+      <form novalidate> <!-- 'novalidate' turns off autom form validation -->
+<!--
+        <fieldset data-id="1">
+          <legend>Q1. Who is the author of <cite>The Hitchhiker's Guide to the Galaxy</cite>?</legend>
+          <label>
+            <input type="radio" name="Q1" value="a" />
+            A
+          </label>
+          <label>
+            <input type="radio" name="Q1" value="b" />
+            B
+          </label>
+          <label>
+            <input type="radio" name="Q1" value="c" />
+            C
+          </label>
+          <label>
+            <input type="radio" name="Q1" value="d" />
+            D
+          </label>
+          <p>Wrong Answer. The correct answer is: "Douglas Adams".</p>
+        </fieldset>
+ -->
+      </form>
+
+      <!-- move the buttons into the form after the template has rendered -->
+      <button type="submit" class="active">Submit Quiz</button>
+      <button type="reset">Reset</button>
+    </main>
+
+    <script id="questions" type="text/x-handlebars">
+      {{#each questions}}
+        {{> questionTemplate}}
+      {{/each}}
+    </script>
+
+    <script id="question" type="text/x-handlebars">
+      <fieldset data-id="{{id}}">
+        <legend>Q{{id}}. {{{description}}}</legend>
+        {{#each options}}
+          <label>
+            <input type="radio" name="Q{{../id}}" value="{{this}}" />
+            {{this}}
+          </label>
+        {{/each}}
+        <p></p>
+      </fieldset>
+    </script>
+
+    <script src="forms_ex5.js"></script>
+  </body>
+</html>

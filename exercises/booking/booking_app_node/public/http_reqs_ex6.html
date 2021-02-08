@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise 6</title>
+    <meta charset="utf-8" />
+    <style>
+      #newStudentForm {
+        visibility: hidden;
+      }
+      #bookedScheduleDates > li { /*from the Solution*/
+        cursor: pointer;
+      }
+      .visible {
+        display: "";
+      }
+      .invisible {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Bookings</h1>
+    <ul id="bookedScheduleDates">
+    </ul>
+  </body>
+
+  <script src="xhr_functions.js"></script>
+  <script>
+    // inputs:
+    // - an outer <ul> w/o any <li>s
+    // outputs:
+    // - an "unordered list" of schedule dates (ordered from oldest date to newest)
+    // - a sublist of bookings for each of the schedule dates
+    // algo:
+    // - gen a list of dates w/ booked schedules
+    // - for each date
+    //   - create an outer <li> with the date as its text content
+    //   - create a hidden inner <ul> w/i the outer <li>
+    //   - gen a list of bookings for that date
+    //   - for each booking
+    //     - create an inner <li> with the booking details as its text content
+    //     - append the inner <li> to the inner <ul>
+    //   - append the outer <li> to the outer <ul>
+    //   - create a click event listener on the outer (parent) <ul>
+    //   - if an outer <li> is clicked
+    //     - display the inner <ul> of booking details for that date
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const outerUL = document.getElementById('bookedScheduleDates');
+
+      // gen a list of dates w/ booked schedules; do something w/ the data (invoke the cb)
+      url = 'http://localhost:3000/api/bookings';
+      getData(url, 200, data => {
+        // console.log(data);
+        // display a list of booked dates
+        data.forEach(date => {
+          const outerLI = document.createElement('li');
+          outerLI.innerHTML = date;
+          const innerUL = document.createElement('ul');
+          innerUL.classList.add('invisible');
+
+          // gen a list of bookings for a given date; do something w/ the data (invoke the cb)
+          url = `http://localhost:3000/api/bookings/${date}`;
+          getData(url, 200, data => {
+            // console.log(data);
+            data.forEach(booking => {
+              const innerLI = document.createElement('li');
+              innerLI.innerHTML = booking.join(' | ');
+              innerUL.appendChild(innerLI);
+            });
+
+            outerLI.appendChild(innerUL);
+          });
+
+          outerUL.appendChild(outerLI);
+        });
+      });
+
+      outerUL.addEventListener('click', event => {
+        event.preventDefault();
+        let target = event.target;
+        // console.log(target, target.parentElement, target.parentElement.parentElement, target.parentElement.parentElement.parentElement);
+        if (target.parentElement === outerUL) {
+          // the outerLI was clicked; toggle display of the innerUL
+          target.querySelector('ul').classList.toggle('invisible');
+          target.querySelector('ul').classList.toggle('visible');
+        } else if (target.parentElement.parentElement.parentElement === outerUL)
+          // the innerLI was clicked; hide the innerUL
+          target.parentElement.classList = 'invisible';
+      });
+    });
+  </script>
+</html>

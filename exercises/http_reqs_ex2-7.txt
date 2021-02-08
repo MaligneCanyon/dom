@@ -1,0 +1,6 @@
+see files "exercises/booking/booking_app_node/public/http_reqs_ex#.html"
+- access the files using "localhost:3000/http_reqs_ex#.html"
+
+see http_reqs_ex7.html for the most-up-to-date version of the sendData() fn
+- POST reqs should be updated in earlier exercises, paying attn to success and failure status codes and fns
+- fn'ality could be extended to getData()

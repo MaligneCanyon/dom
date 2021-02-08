@@ -1,0 +1,36 @@
+algo:
+- if the CE button is pressed
+  - set entry to '0'
+- if the C button is pressed
+  - set entry to '0'
+  - set expr to ''
+- if the . button is pressed
+  - if entry does not contain a '.'
+    - append a '.' to entry
+- if the NEG button is pressed
+  - if entry is not '0'
+    - if entry contains a '-'
+      - remove the '-' from entry
+    - else
+      - prepend a '-' to entry
+- if a num button is pressed
+  - if entry is '0' or the last key pressed was an op
+    - set entry to the textContent of the num button
+  - else
+    - append the textContent of the num button to entry
+- if an op button is pressed
+  - if the expr doesn't contain an op
+    - if the pressed op button wasn't '='
+      - set result to entry
+      - copy entry to the expr
+      - copy the op button textContent to the expr
+  - else
+    - copy entry to the expr (re-use the current value)
+    - copy the op button textContent to the expr
+    - eval the expr
+      - set result to the "previous result operated on by
+        the previous op using the last entry", i.e.
+        String(Number(result) expr[-3] Number(expr[-2]))
+      - set entry to result
+      - if the pressed op button value was '='
+        - set expr to ''

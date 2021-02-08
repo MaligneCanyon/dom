@@ -1,0 +1,58 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+body {
+  background-color: #333355;
+  margin-bottom: 80px; /*leave space for figcaptions*/
+}
+
+/*
+p {
+  color: lightblue;
+}
+*/
+
+figure {
+  width: 25%;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-top: 40px;
+  padding: 0 20px;
+  position: relative;
+  vertical-align: top;
+}
+
+figcaption {
+  color: white;
+  background-color: black;
+  text-align: center;
+  position: absolute;
+  vertical-align: top;
+  /*top: ?; determine using JS, based on img height*/
+  left: 60px;
+  opacity: 0;
+  border-radius: 5px;
+  z-index: 1;
+  width: 200px;
+  padding: 5px;
+}
+
+figcaption.show {
+  transition-property: opacity;
+  transition-duration: 0.5s;
+  transition-delay: 1.5s;
+  opacity: 0.7;
+}
+
+figcaption.hide {
+  opacity: 0;
+}
+
+img {
+  width: 100%; /*the entire image container width*/
+  border: 5px solid white;
+  border-radius: 5px;
+}

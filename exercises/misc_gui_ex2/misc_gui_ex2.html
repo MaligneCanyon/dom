@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Programming Langs</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../whitespace-reset.css" />
+    <link rel="stylesheet" href="misc_gui_ex2.css" />
+    <script src="../../handlebars.min-v4.7.6.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Programming Languages</h1>
+    </header>
+
+    <main>
+<!--
+      <section>
+        <h2></h2>
+        <p></p>
+        <button></button>
+      </section>
+ -->
+    </main>
+
+    <script id="langs" type="text/x-handlebars">
+      {{#each langs}}
+        {{> langTemplate}}
+      {{/each}}
+    </script>
+
+    <script id="lang" type="text/x-handlebars">
+      <section>
+        <h2>{{name}}</h2>
+        <p>{{description}}</p>
+        <button>Show More</button>
+      </section>
+    </script>
+
+    <script src="misc_gui_ex2.js"></script>
+  </body>
+</html>

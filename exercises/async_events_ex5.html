@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <style type="text/css">
+      main, #sub {
+        padding: 15px;
+      }
+      main {
+        width: 100%;
+        height: 200px;
+        background: blue;
+        color: white;
+      }
+      #sub {
+        position: relative;
+        top: 100px;
+        left: 15px;
+        background: red;
+        height: 50px;
+        width: 50%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      Main Area
+      <section id="sub">
+        Sub Area
+      </section>
+    </main>
+  </body>
+
+  <script type="text/javascript">
+    // document.querySelector('main').addEventListener('contextmenu', event => {
+    //   event.preventDefault(); // prevent the normal contextmenu from appearing
+    //   alert("I'm the main !");
+    // });
+
+    // document.querySelector('#sub').addEventListener('contextmenu', event => {
+    //   event.stopPropagation(); // don't let the event bubble up to the 'main' elem's event listener
+    //   event.preventDefault(); // prevent the normal contextmenu from appearing
+    //   alert("I'm the sub !");
+    // });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const main = document.querySelector('main');
+      const section = document.getElementById('sub');
+
+      [main, section].forEach(elem => {
+        elem.addEventListener('contextmenu', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          // alert(`I am ${event.target.nodeName}`); // works even though 'event' is used instead of 'e' !
+          let target = e.target;
+          let str = target.hasAttribute('id') ? target.id.toUpperCase() : target.nodeName;
+          alert(`I'm the ${str} !`);
+        });
+      });
+    });
+  </script>
+</html>

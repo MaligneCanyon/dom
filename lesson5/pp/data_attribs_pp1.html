@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Data Attribs pp</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <style>
+      article + article { /*initially hide all articles after the 1st one*/
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li><a href="#" data-block="gold">Gold Sponsors</a></li>
+      <li><a href="#" data-block="silver">Silver Sponsors</a></li>
+      <li><a href="#" data-block="bronze">Bronze Sponsors</a></li>
+    </ul>
+
+    <article data-block="gold">
+      <h1>Gold Sponsors</h1>
+    </article>
+
+    <article data-block="silver">
+      <h1>Silver Sponsors</h1>
+    </article>
+
+    <article data-block="bronze">
+      <h1>Bronze Sponsors</h1>
+    </article>
+
+    <script>
+      $(function () {
+        $('a').on('click', function(event) {
+          event.preventDefault();
+          let block = $(this).attr('data-block'); // get the attrib value for the clicked link
+          $('article').each(function() { // for each article
+            // if the attrib value of the article matches that of the clicked link,
+            // show the article; otherwise, hide it
+            if ($(this).attr('data-block') === block) $(this).show();
+            else $(this).hide();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

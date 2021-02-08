@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise 3</title>
+    <meta charset="utf-8" />
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <form id="staffForm">
+      <fieldset>
+        <legend>Add Staff</legend>
+        <p><label>Name: <input type="text" name="name"></label></p>
+        <p><label>email: <input type="email" name="email"></label></p>
+        <p><button type="submit">Submit</button></p>
+      </fieldset>
+    </form>
+  </body>
+
+  <script src="xhr_functions.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const staffForm = document.getElementById('staffForm');
+      staffForm.addEventListener('submit', event => {
+        event.preventDefault(); // prevent the browser from submitting the form
+
+        const url = 'http://localhost:3000/api/staff_members';
+        // code to prevent adding duplicate records:
+        // - get a list of staff members
+        // - chk whether the new entry is already an existing staff member
+        getData(url, 200, func);
+
+        function func(data) {
+          let staffName = document.querySelector('form input[name="name"]').value;
+          if (data.some(staffMember => staffName === staffMember.name))
+            alert('The staff member already exists');
+          else sendData(url, 201, null, 'form', staffForm);
+        }
+      });
+    });
+  </script>
+</html>

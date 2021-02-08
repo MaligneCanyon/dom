@@ -1,0 +1,77 @@
+<style type="text/css">
+#elem1 {
+  background-color: green;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#elem2 {
+  background-color: blue;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 150px;
+  height: 150px;
+}
+
+#elem3 {
+  background-color: red;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 100px;
+  height: 100px;
+  line-height: 25px;
+}
+
+#elem4 {
+  background-color: yellow;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+</style>
+
+<div id="elem1">1
+  <section id="elem2">2
+    <article id="elem3">3
+      <main id="elem4">4
+      </main>
+    </article>
+  </section>
+</div>
+<input type=text>
+
+<script type="text/javascript">
+  let elem1 = document.querySelector('#elem1');
+
+  document.addEventListener('keypress', event => {
+    setTimeout(() => alert(event.code), 7000);
+  });
+
+  elem1.addEventListener('click', event => {
+    setTimeout(() => alert(event.target.tagName), 7000);
+  });
+</script>
+
+<!--
+- event type
+- which elem the listener is attached to
+- phase
+- placement in the order of event handlers
+- what is alerted
+- which Event obj property (if any) is ref'd
+
+
+box1 is clicked, the letters q and w are entered in the text input box, box4 is clicked:
+1. after ~7sec, the 'click' event listener listening on the <div> element in the bubbling phase (the second event handler) alerts "DIV" (the tagName of the target element)
+2. the 'keypress' event listener listening on the document in the bubble phase (the first event handler) alerts "KeyQ" (the event code for the pressed key)
+3. the 'keypress' event listener listening on the document in the bubble phase (the first event handler) alerts "KeyW" (the event code for the pressed key)
+4. the 'click' event listener listening on the <div> element in the bubbling phase (the second event handler) alerts "MAIN" (the tagName of the target element)
+ -->

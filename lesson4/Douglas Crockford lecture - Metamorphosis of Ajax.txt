@@ -1,0 +1,16 @@
+- the DOM is the browser's API
+  - it is the interface the browser provides to JS for manipulating documents 
+- script tags should be placed as close to the bottom of the <body> as possible
+- CSS <link> tags should be placed as high in the <head> tag as possible
+- the browser may insert missing tags in a doc, making the num of child elems dif than what you expected
+  - ex. if you didn't spec a <tbody> in a table, the browser will insert one
+- document.documentElement reps the <html> elem
+- using child and nextSibling should allow you to traverse the entire DOM (if you use recursion)
+- when you create a node, it's initially not attached to the DOM tree; though you can manip it, it's not visible until it's pasted into the doc
+- you should remove any event handlers from a node before you remove or replace the node
+- innerHTML is a security hazard (esp re: user-entered text)
+- event "capturing" mode previously known as "trickling"
+- Chrome tool Speed Tracer can be used to optimize webpages
+  - indicates where time is spent behind the scenes (running CSS, JS, building the DOM tree, etc)
+- widgets: ready-made bundles of fn'ality and appearance that you can use in a web page to instantly do useful things
+

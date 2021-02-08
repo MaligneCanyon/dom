@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Nodes to Array</title>
+  </head>
+  <body>
+    <header id="1"></header>
+    <main id="2">
+      <div></div>
+      <div></div>
+    </main>
+    <footer id="3"></footer>
+  </body>
+  <script src="dom_tqm_ex7.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    nodesToArr();
+    // ["BODY",[["HEADER",[]],["MAIN",[["DIV",[]],["DIV",[]]]],["FOOTER",[]]]]
+
+    // OR
+
+    // ["BODY", [
+    //   ["HEADER", []],
+    //   ["MAIN", [
+    //     ["DIV", []],
+    //     ["DIV", []]]],
+    //   ["FOOTER",[]]]]
+  </script>
+</html>

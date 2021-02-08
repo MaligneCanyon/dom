@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Space Designer | Team</title>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link href="../css/space_design_team.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <h1>&nbsp;</h1> <!-- <h1> b/g img contains imbedded text -->
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="space_design_home.html">Home</a></li>
+        <li><a href="space_design_projects.html">Projects</a></li>
+        <li><a class="active" href="space_design_team.html">Team</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section>
+        <h2>&bull;&nbsp;&nbsp;Team&nbsp;&nbsp;&bull;</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniadolor.
+        </p>
+        <ul>
+          <li>
+            <figure>
+              <img src="../images/img_kevin.jpg" alt="" />
+              <figcaption>Kevin</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="../images/img_louis.jpg" alt="" />
+              <figcaption>Louis</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="../images/img_kasper.jpg" alt="" />
+              <figcaption>Kasper</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="../images/img_chris.jpg" alt="" />
+              <figcaption>Chris</figcaption>
+            </figure>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Lorem ipsum dolor sit amet, consectetu<br>
+        incididunt ut labore et dolore magna aliqua. Ut enim ad
+      </p>
+      <ul>
+        <li><a href="#" class="twitter">Twitter</a></li>
+        <li><a href="#" class="facebook">Facebook</a></li>
+        <li><a href="#" class="email">Email</a></li>
+        <li><a href="#" class="instagram">Instagram</a></li>
+      </ul>
+    </footer>
+
+    <div id="modal">
+      <figure>
+        <img src="" alt="" />
+        <figcaption></figcaption>
+        <img src="../images/icon_close.png" alt="" />
+      </figure>
+      <p></p>
+    </div>
+
+    <div id="overlay"></div>
+  </body>
+
+  <script>
+    const modalInfo = [
+      {
+        imgSrc: "../images/img_kevin.jpg",
+        figCaptionText: "Kevin Wang",
+        pText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      },
+      {
+        imgSrc: "../images/img_louis.jpg",
+        figCaptionText: "Louis Burton",
+        pText: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      },
+      {
+        imgSrc: "../images/img_kasper.jpg",
+        figCaptionText: "Kasper Salto",
+        pText: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      },
+      {
+        imgSrc: "../images/img_chris.jpg",
+        figCaptionText: "Chris Lee",
+        pText: "Excepte sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      },
+    ];
+
+    // todos:
+    // center the modal in the viewport
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('modal');
+      const modalClose = modal.querySelector('img:nth-of-type(2)');
+      const overlay = document.getElementById('overlay');
+      const teamLis = document.querySelectorAll('section ul li');
+      teamLis.forEach((li, ndx) => {
+        const teamFig = li.querySelector('figure');
+        const modalImg = modal.querySelector('figure img');
+        const modalFigcaption = modal.querySelector('figure figcaption');
+        const modalP = modal.querySelector('p');
+        li.addEventListener('click', event => {
+          let info = modalInfo[ndx];
+          modalImg.src = info.imgSrc;
+          // modalFigcaption.innerHTML = info.figCaptionText;
+          modalFigcaption.textContent = info.figCaptionText;
+          // modalP.innerHTML = info.pText;
+          modalP.textContent = info.pText;
+          modal.style.display = 'block';
+          overlay.style.display = 'block';
+          li.insertBefore(modal, teamFig);
+        });
+      });
+
+      modalClose.addEventListener('click', closeOverlays);
+      overlay.addEventListener('click', closeOverlays);
+
+      function closeOverlays(event) {
+        event.stopPropagation();
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+      }
+    });
+  </script>
+</html>

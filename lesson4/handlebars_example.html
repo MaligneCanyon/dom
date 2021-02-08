@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Handlebars Example</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="../handlebars.min-v4.7.6.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script> -->
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <ul>
+    </ul>
+
+    <script id='productTemplate' type='text/x-handlebars'>
+      <li>
+        <h3>{{name}}</h3>
+        <dl>
+          <dt>Quantity:</dt>
+          <dd>{{quantity}}</dd>
+          <dt>Price:</dt>
+          <dd>
+            ${{price}}
+            {{#if on_sale}}
+            <strong>SALE!</strong>
+            {{/if}}
+          </dd>
+        </dl>
+      </li>
+    </script>
+
+    <script id='productsList' type='text/x-handlebars'>
+      {{#each items}} <!-- 'items' is a prop of the obj passed to the template fn -->
+        {{> productTemplate}}
+      {{/each}}
+    </script>
+
+    <script>
+      let products = [
+        {
+          name: 'Banana',
+          quantity: 14,
+          price: 0.79,
+        },
+        {
+          name: 'Apple',
+          quantity: 3,
+          price: 0.55,
+        }
+      ];
+
+      let $list = $('ul');
+      // let productsHtml = products.map(function(item) {
+      //   let html = '<li><h3>' + item.name + '</h3><dl><dt>Quantity:</dt><dd>' + item.quantity + '</dd><dt>Price:</dt><dd>$' + item.price;
+      //   if (item.on_sale) {
+      //     html += ' <strong>SALE!</strong>';
+      //   }
+
+      //   html += '</dd></dl></li>';
+      //   return html;
+      // });
+      // $list.html(productsHtml.join(''));
+
+      // Compile both templates for use later
+      let productsList = Handlebars.compile($('#productsList').html());
+      let productTemplate = Handlebars.compile($('#productTemplate').html());
+
+      // Also register the product template as a partial
+      Handlebars.registerPartial('productTemplate', $('#productTemplate').html());
+
+      // Write the current list to the page
+      // let productsHtml = products.map(function(product) {
+      //   return productTemplate(product);
+      // });
+      // let productsHtml = products.map(productTemplate);
+      // $list.html(productsHtml.join(''));
+
+      $list.html(productsList({ items: products })); // 'items' refs the products arr
+
+      // Create a new product
+      let newProduct = {
+        name: 'Soup',
+        quantity: 1,
+        price: 1.29,
+      };
+
+      // Render the new product with the product template
+      $list.append(productTemplate(newProduct));
+    </script>
+  </body>
+</html>

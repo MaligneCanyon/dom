@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>On the River</title>
+    <meta charset="UTF-8" />
+    <style>
+      .article-text {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page1">
+      <div class="intro">
+        <p>The sun is low,</p>
+      </div>
+      <p>The waters flow,</p>
+    </div>
+    <div id="page2">
+      <div class="intro">
+        <p>My boat is dancing to and fro.</p>
+      </div>
+      <p>The eve is still,</p>
+    </div>
+    <div id="page3">
+      <div class="intro">
+        <p>Yet from the hill</p>
+      </div>
+      <p>The killdeer echoes loud and shrill.</p>
+    </div>
+
+    <script src="walk_nodes.js" type="text/javascript"></script>
+    <script>
+      // add any CSS class, by tagName
+      function addClassToElems(className, tagName) { // wraps around the callback and walk fns
+        let elems = [];
+        let callback = function (node) {
+          if (node.nodeName === tagName.toUpperCase()) {
+            node.classList.add(className);
+            elems.push(node);
+          }
+        };
+        walk(document, callback); // search the entire document
+        return elems;
+      }
+      addClassToElems('article-text', 'p').forEach(elem => console.log(elem));
+
+
+      // the Solution ... // adds only the 'article-text' CSS class, for an exactNodeType
+      // function addClassToParagraphs(node) {
+      //   if (node instanceof HTMLParagraphElement) {
+      //     node.classList.add('article-text');
+      //   }
+
+      //   let nodes = node.childNodes;
+      //   for (let index = 0; index < nodes.length; index += 1) {
+      //     addClassToParagraphs(nodes[index]);
+      //   }
+      // }
+
+      // addClassToParagraphs(document.body);
+    </script>
+  </body>
+</html>

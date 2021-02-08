@@ -1,0 +1,65 @@
+<style>
+  #elem1 {
+    background-color: green;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  #elem2 {
+    background-color: blue;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 150px;
+    height: 150px;
+  }
+
+  #elem3 {
+    background-color: red;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 100px;
+    height: 100px;
+    line-height: 25px;
+  }
+
+  #elem4 {
+    background-color: yellow;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+</style>
+
+<div id="elem1">1
+  <div id="elem2">2
+    <div id="elem3">3
+      <div id="elem4">4
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const elem1 = document.querySelector('#elem1');
+  const elem4 = document.querySelector('#elem4');
+
+  // both event listeners alert 'elem4'
+  // elem1.addEventListener('click', event => alert(event.target.id));
+  // elem4.addEventListener('click', event => alert(event.target.id));
+
+  // alerts 'elem4' before alerting 'elem1'
+  // elem1.addEventListener('click', event => alert(event.currentTarget.id));
+  // elem4.addEventListener('click', event => alert(event.currentTarget.id));
+
+  // alerts 'elem1' before alerting 'elem4'
+  elem1.addEventListener('click', event => alert(event.currentTarget.id), true);
+  elem4.addEventListener('click', event => alert(event.currentTarget.id));
+</script>

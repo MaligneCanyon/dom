@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+  <head>
+    <title>Fluid Layout Gallery</title>
+    <meta charset="UTF-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+
+  <body>
+    <main>
+      <h1>My Photo Gallery</h1>
+      <figure>
+        <img src="" alt="" />
+        <!-- <figcaption>Example photo</figcaption> -->
+        <figcaption></figcaption> <!-- determined dynamically -->
+      </figure>
+      <ul>
+        <li><img src="" alt="" title="Photo 1" /></li>
+        <li><img src="" alt="" title="Photo 2" /></li>
+        <li><img src="" alt="" title="Photo 3" /></li>
+        <li><img src="" alt="" title="Photo 4" /></li>
+      </ul>
+    </main>
+  </body>
+
+  <script>
+    $(function() {
+      const imgSource = 'http://placehold.it/1200x900/';
+      const imgColors = [
+        '0000FF/FFFFFF',
+        'FF0000/FFFFFF',
+        '00FF00/FFFFFF',
+        '000000/FFFFFF'
+      ];
+      const fadeTime = 400;
+      const $mainImg = $('figure img');
+      const $mainFigcaption = $('figure figcaption');
+      const $thumbnails = $('li img');
+
+      // originally, the 1st thumbnail is 'active'
+      let activeNdx = 0;
+      $thumbnails.eq(activeNdx).toggleClass('active');
+      // set the source and figcaption for the main img
+      $mainImg.attr('src', imgSource + imgColors[activeNdx]);
+      $mainFigcaption.text($thumbnails.eq(activeNdx).attr('title'));
+
+      // for each thumbnail ...
+      $thumbnails.each(function(ndx) {
+        // set the img source
+        $(this).attr('src', imgSource + imgColors[ndx]);
+
+        // add an eventListener
+        $(this).on('click', function(event) {
+          // a thumbnail becomes 'active' when it is clicked
+          $thumbnails.eq(activeNdx).toggleClass('active'); // remove the class from the old thumbnail
+          activeNdx = ndx;
+          $(this).toggleClass('active'); // add the class to the current thumbnail
+
+          // change the source and figcaption for the main img
+          let newSrc = $(this).attr('src');
+          let newCaption = $(this).attr('title');
+          // console.log({newSrc});
+          $mainImg.fadeOut(fadeTime, function() { // fade out the old img
+            $mainImg.attr('src', newSrc);
+            $mainFigcaption.text(newCaption);
+            $mainImg.fadeIn(fadeTime); // fade in the new img
+          });
+        });
+      });
+    });
+  </script>
+</html>

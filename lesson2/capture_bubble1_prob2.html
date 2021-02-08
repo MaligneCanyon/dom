@@ -1,0 +1,74 @@
+<style>
+  .d1 {
+    background-color: green;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .d2 {
+    background-color: blue;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 150px;
+    height: 150px;
+  }
+
+  .d3 {
+    background-color: red;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 100px;
+    height: 100px;
+    line-height: 25px;
+  }
+
+  .d4 {
+    background-color: yellow;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+</style>
+
+<body>
+  <div class="d1 pick">1
+    <main class="d2 pick">2
+      <div class="d3">3
+        <section class="d4 pick">4
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+
+<script>
+  let divs = document.querySelectorAll('.pick');
+
+  for (let index = 0; index < divs.length; index += 1) {
+    divs[index].addEventListener('click', highlightThis, true);
+  }
+
+  document.querySelector('.d3').addEventListener('click', highlightThis, false); // extra line
+
+  function highlightThis(e) {
+    alert(`${this.className} ${e.currentTarget.tagName}`);
+  }
+</script>
+
+<!--
+- since addEventListener was called w/ the 'true' arg, event listeners are called during the capturing phase;
+  so events occur in the order 1,2,4 when 4 is clicked
+- alerts: "d1 pick DIV", "d2 pick MAIN", "d4 pick SECTION"
+
+- if we add the extra line of code, that event listener fires in the bubbling phase, so events occur in the
+  order 1,2,4,3
+- alerts: (as above plus) "d3 DIV"
+-->

@@ -1,0 +1,18 @@
+<ul id="list">
+  <li class="list-item">Item 1</li>
+  <li class="list-item">Item 2</li>
+  <li class="list-item">Item 3</li>
+</ul>
+
+<script type="text/javascript">
+  const list = document.querySelector('#list');
+  const listItems = document.getElementsByClassName('list-item');
+  console.log(listItems.length);  // logs 3
+
+  const newItem = document.createElement('p'); // creates a new element
+  newItem.className = 'list-item';             // adds a class to the element
+  list.appendChild(newItem);                   // appends to "list" element
+
+  console.log(listItems.length);  // logs 4
+  // listItems' length increases even though we didn't explicitly add any elements to it
+</script>

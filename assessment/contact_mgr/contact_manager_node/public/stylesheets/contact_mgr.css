@@ -1,0 +1,233 @@
+
+* {
+  /*can use 'outline' or 'border' for debug, or use a temporary b/g colour on a specific selector*/
+  /*outline: 1px solid red;*/
+  /*border: 1px solid red;*/
+}
+
+.selected {
+  border: 1px solid #428bcb; /*blue-grey*/
+  box-shadow: 0 0 4px #428bcb; /* offset-x | offset-y | blur-radius | color */
+}
+.hidden {
+  display: none;
+}
+.visible {
+  display: block;
+}
+.error {
+  font-size: 0.8rem;
+  color: #be3333; /*red*/
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: white;
+  min-width: 440px;
+}
+
+header {
+  background-color: #5d4484; /*purple*/
+  text-align: center;
+  padding: 32px 0;
+}
+header h1 {
+  color: white;
+  font-size: 2.2rem;
+  line-height: 35px;
+  margin-bottom: 15px;
+}
+header p {
+  color: #cdbfcc;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
+main {
+  position: relative;
+  left: 50%;
+  width: 1170px;
+  margin-left: -585px;
+}
+
+button {
+  color: #5d4484;
+  border: 1px solid #5d4484;
+  border-radius: 5px;
+}
+
+select {
+  display: inline-block;
+  color: #5d4484;
+  font-size: 1.0rem;
+  border: 1px solid #5d4484;
+}
+
+select:hover, select:focus,
+button:hover, button:focus {
+  color: white;
+  background-color: #5d4484;
+  cursor: pointer;
+}
+
+input {
+  display: inline-block;
+  color: grey;
+  background-color: white;
+  font-size: 1.0rem;
+  font-weight: lighter; /*determined programmatically*/
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+input.selected {
+  border: 1px solid #428bcb; /*blue-grey*/
+  box-shadow: 0 0 4px #428bcb; /* offset-x | offset-y | blur-radius | color */
+  font-weight: bolder; /*determined programmatically*/
+}
+
+#section1, #section3 {
+  /*overflow: hidden;*/ /*wrap any floated child elems*/
+  background-color: #f5f5f5; /*light grey*/
+  height: 85px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+#section1 button {
+  display: inline-block;
+  font-size: 1.2rem;
+  margin: 20px 0 20px 240px; /*margin-left chgs based on overall width*/
+  padding: 10px;
+  /*float: left;*/
+}
+#section1 label {
+  display: inline-block;
+  margin-left: 100px;
+}
+#section1 input {
+  width: 250px;
+  margin: 28px 170px 28px 0; /*margin-right chgs based on overall width*/
+  padding: 4px 10px;
+  float: right;
+}
+#section1 input.selected {
+  border: 1px solid #428bcb; /*blue-grey*/
+  box-shadow: 0 0 4px #428bcb; /* offset-x | offset-y | blur-radius | color */
+}
+
+#section3 {
+  margin: 30px 0 60px;
+}
+#section3 p {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 30px;
+}
+#section3 p b {
+  font-size: inherit;
+  font-weight: bolder;
+}
+
+li {
+  display: inline-block;
+  width: 259px;
+  margin: 0 15px;
+  padding: 30px 0 20px;
+  border-bottom: 1px solid lightgrey;
+}
+li h2 {
+  font-size: 1.4rem;
+  margin-bottom: 11px;
+}
+li h3, li p {
+  font-size: 0.9rem;
+  /*overflow: hidden;*/ /*doesn't work*/
+  margin-bottom: 2px;
+}
+li button {
+  background-color: white;
+  margin-top: 19px;
+  padding: 8px 10px;
+}
+
+form {
+  position: relative;
+  /*overflow: hidden;*/ /*wrap any floated child elems*/
+  left: 50%;
+  width: 1140px; /*1170-30*/
+  margin: 0 15px 0 -570px; /*margin-left: 585-15*/
+}
+form h2 {
+  font-size: 1.8rem;
+  font-weight: normal;
+  text-align: center;
+  padding: 40px 0 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+fieldset div {
+  margin-bottom: 25px;
+}
+fieldset div label {
+  display: inline-block;
+  font-size: 0.9rem;
+  text-align: right;
+  width: 32%;
+}
+fieldset div label.active {
+  color: #be3333;
+}
+fieldset div input {
+  width: 48%;
+  height: 32px;
+  padding-left: 10px;
+  margin-left: 2%;
+}
+/* see .selected
+fieldset div input:selected {
+}
+*/
+fieldset div input.active {
+  border-color: #be3333;
+}
+fieldset div input.active.selected {
+  box-shadow: 0 0 4px #be3333; /* offset-x | offset-y | blur-radius | color */
+}
+fieldset div select {
+  margin-left: 10px;
+}
+fieldset div span {
+  display: block;
+  margin: 5px 0 0 34.5%;
+}
+form button {
+  font-size: 1.2rem;
+  background-color: white;
+  width: 23%;
+  padding: 10px 10px;
+}
+form button:first-of-type {
+  margin-left: 34.5%;
+  margin-right: 2.5%;
+}
+
+footer {
+  color: black;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid lightgrey;
+
+  position: relative;
+  left: 50%;
+  width: 1140px; /*1170-30*/
+  margin: 20px 15px 0 -570px; /*margin-left: 585-15*/
+  padding: 20px 0;
+}
+footer a {
+  color: #428bcb; /*blue-grey*/
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+  cursor: pointer; /*n/r; default for <a> in all browsers ?*/
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise 7</title>
+    <meta charset="utf-8" />
+    <style>
+      #newStudentForm {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form id="cancellationForm">
+      <fieldset>
+        <h2>Cancellations</h2>
+        <p> <!-- a select list -->
+          <label>Schedule:
+            <select name="schedule">
+              <option value="" selected>Please Select one</option>
+            </select>
+          </label>
+        </p>
+        <button type="submit" name="Booking">Cancel Booking</button>
+        <button type="submit" name="Schedule">Cancel Schedule</button>
+      </fieldset>
+    </form>
+  </body>
+
+  <script src="xhr_functions.js"></script>
+  <script>
+    // inputs:
+    // - a form w/ a dropdown list of schedules
+    // - a form submit button for cancelling a booking
+    // - a form submit button for cancelling a schedule
+    // outputs:
+    // - a success/failure msg
+    // algo:
+    // - get a list of staff members
+    // - gen a list of schedules
+    //   - add the schedules to the dropdown list
+    // - if the cancelBooking submit button is clicked
+    //   - submit the cancelation req
+    //   - if the resp is ok (status is 204)
+    //     - display a msg
+    //   - else
+    //     - display a msg
+    // - if the cancelSchedule submit button is clicked
+    //   - submit the cancelation req
+    //   - if the resp is ok (status is 204)
+    //     - display a msg
+    //     - remove the cancelled schedule from the dropdown list
+    //   - else
+    //     - display a msg
+
+    // submit data to the spec'd URL
+    function sendData(method, url, data, configObj) {
+      // could move all of the args into the configObj ... incl'ing dataFormat
+      let { successCode, successFn, successMsg, failureCode, failureFn, failureMsg } = configObj;
+
+      let req = new XMLHttpRequest();
+
+      req.open(method, url);
+
+      // if (dataFormat === 'json') {
+        req.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        data = JSON.stringify(data);
+      // }
+      // add other dataFormats here
+
+      req.addEventListener('load', () => {
+        if (req.status === successCode) {
+          alert(req.responseText ? req.responseText : successMsg);
+          if (successFn) successFn();
+        } else {
+          alert(`${failureMsg}: ${req.status}\n${req.responseText}`);
+          if (failureFn) failureFn();
+        }
+      });
+
+      req.addEventListener('error', () => {
+        alert('Some sort of comm error occurred');
+      });
+
+      req.send(data);
+    }
+
+    // - should wait for success of staff member list retrieval before proceeding
+    // - need to dynamically regen list of avail schedules (remove freshly deleted schedules)
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // get a list of staff members
+      let staffMembers = [];
+      // get a list of staff members; do something w/ the data (invoke the cb)
+      getData('http://localhost:3000/api/staff_members', 200, data => {
+        staffMembers = data; // store the data
+      }, false); // wait for a resp
+
+      // gen a dropdown list of available schedules
+      let schedules = [];
+      const cancellationForm = document.getElementById('cancellationForm');
+      const scheduleSelect = cancellationForm.querySelector('select');
+      // get a list of schedules; do something w/ the data (invoke the cb)
+      getData('http://localhost:3000/api/schedules', 200, data => {
+        schedules = data; // store the data
+        schedules.forEach(schedule => {
+          let staffName = staffMembers.filter(staff => staff.id === schedule.staff_id)[0].name;
+          // console.log(staffName);
+
+          const option = document.createElement('option');
+          let optionText = document.createTextNode(`${schedule.id} | ${staffName} | ` +
+            `${schedule.date} | ${schedule.time}`);
+          option.appendChild(optionText);
+          scheduleSelect.appendChild(option);
+        });
+      }, false); // wait for a resp
+
+      // handle the form submission
+      let clickedButton = '';
+      const buttons = cancellationForm.querySelectorAll('button');
+      Array.from(buttons).forEach(button => {
+        button.addEventListener('click', event => {
+          clickedButton = event.target.name;
+          // console.log({clickedButton});
+        });
+      });
+
+      cancellationForm.addEventListener('submit', event => {
+        // console.log('cancellationForm submit event listener fired');
+        event.preventDefault(); // prevent the browser from submitting the form
+
+        let schedule = scheduleSelect.value;
+        if (schedule === scheduleSelect.firstElementChild.value)
+          alert('Please Select a schedule');
+        else { // gather the form data
+          let scheduleId = Number(schedule.split(' | ')[0]);
+          // console.log({scheduleId});
+          if (clickedButton === 'Schedule') cancelSchedule(scheduleId);
+          else /*if (clickedButton === 'Booking')*/ cancelBooking(scheduleId);
+        }
+
+        function cancelBooking(scheduleId) { // uses a scheduleId (and not the non-existant bookingId)
+          let data = { schedule_id: scheduleId };
+
+          // submit the data
+          let configObj = {
+            successCode: 204,
+            successMsg: 'The booking was cancelled',
+            failureMsg: 'The booking could not be cancelled',
+          };
+
+          sendData('PUT', `http://localhost:3000/api/bookings/${scheduleId}`, data, configObj);
+        }
+
+        function cancelSchedule(scheduleId) {
+          let data = { schedule_id: scheduleId };
+
+          // submit the data
+          let configObj = {
+            successCode: 204,
+            successFn: () => {
+              // remove the cancelled schedule from the dropdown list
+              const options = scheduleSelect.querySelectorAll('option');
+              selectedOption = Array.from(options).filter(option => option.value === schedule)[0];
+              scheduleSelect.removeChild(selectedOption);
+            },
+            successMsg: 'The schedule was cancelled',
+            failureMsg: 'The schedule could not be cancelled',
+          };
+
+          sendData('DELETE', `http://localhost:3000/api/schedules/${scheduleId}`, data, configObj);
+        }
+      });
+    });
+  </script>
+</html>

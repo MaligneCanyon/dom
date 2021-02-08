@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Bold Element + Custom</title>
+    <style type="text/css">
+      .highlight {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>Hello World</section>
+    <p>Greetings!</p>
+  </body>
+
+  <script>
+    function makeBold(elem, func) {
+      elem.addEventListener('click', () => { // n/r but nice to have
+        elem.style.fontWeight = "bold";
+        if (func && typeof func === 'function') { // <-- this line from the Solution
+          func(elem);
+        }
+
+        console.log(sectionElement.classList.contains('highlight'));
+        // true
+        console.log(sectionElement.style.fontWeight);
+        // "bold"
+      });
+    }
+
+    const sectionElement = document.querySelector('section');
+    makeBold(sectionElement, function(elem) {
+      elem.classList.add('highlight');
+    });
+  </script>
+</html>

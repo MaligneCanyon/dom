@@ -1,0 +1,22 @@
+@import url("space_design_files.css");
+
+img {
+  padding-bottom: 45px;
+  width: 100%;
+  max-width: 1000px;
+}
+section:first-of-type img {
+  padding-bottom: 35px;
+}
+
+h3 {
+  color: #3e59b2; /*blue*/
+  padding-bottom: 15px;
+}
+
+section p {
+  padding-bottom: 35px;
+}
+section:last-of-type p {
+  padding-bottom: 50px;
+}

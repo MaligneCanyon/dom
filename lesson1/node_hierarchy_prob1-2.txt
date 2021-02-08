@@ -1,0 +1,6 @@
+1.
+false; the DOM contains additional nodes (#text, #comment)
+
+2.
+true; text nodes can be "empty nodes"
+

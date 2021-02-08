@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Animal Classifications</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+    </style>
+  </head>
+
+  <body>
+    <form id="selection-filters" method="post" action="#">
+      <select id="animal-classifications">
+        <option value="Classifications" selected>Classifications</option>
+        <option value="Vertebrate">Vertebrate</option>
+        <option value="Warm-blooded">Warm-blooded</option>
+        <option value="Cold-blooded">Cold-blooded</option>
+        <option value="Mammal">Mammal</option>
+        <option value="Bird">Bird</option>
+      </select>
+      <select id="animals">
+        <option value="Animals" selected>Animals</option>
+        <option value="Bear">Bear</option>
+        <option value="Turtle">Turtle</option>
+        <option value="Whale">Whale</option>
+        <option value="Salmon">Salmon</option>
+        <option value="Ostrich">Ostrich</option>
+      </select>
+      <button id="clear">Clear</button> <!-- type="submit" by default for a form -->
+    </form>
+  </body>
+
+  <script>
+    // algo:
+    // - if the selected classification is changed
+    //   - remove all existing options from the "animals" <select>
+    //   - look in filter1 for a relevant list of animals for the selected classification
+    //   - repopulate the "animals" <select> with the relevant list of animals
+
+    const filter1 = {
+      'Vertebrate': ['Bear', 'Turtle', 'Whale', 'Salmon', 'Ostrich'],
+      'Warm-blooded': ['Bear', 'Whale', 'Ostrich'],
+      'Cold-blooded': ['Turtle', 'Salmon'],
+      'Mammal': ['Bear', 'Whale'],
+      'Bird': ['Ostrich'],
+    };
+    const filter2 = {
+      'Bear': ['Vertebrate', 'Warm-blooded', 'Mammal'],
+      'Turtle': ['Vertebrate', 'Cold-blooded'],
+      'Whale': ['Vertebrate', 'Warm-blooded', 'Mammal'],
+      'Salmon': ['Vertebrate', 'Cold-blooded'],
+      'Ostrich': ['Vertebrate', 'Warm-blooded', 'Bird'],
+    };
+
+    // the Clear button reloads the web page, so no special code needed to reset the lists
+
+    const classParent = document.querySelector('#animal-classifications');
+    const animalParent = document.querySelector('#animals');
+
+    function selector(firstParent, secondParent, filter) {
+      let secondChildren = Array.from(secondParent.children);
+
+      // add a 'change' EL to the 1st dropdown list
+      // if the selected option from the 1st dropdown list changes, re-build the 2nd dropdown list, based
+      //   on the options in the 2nd list that are applicable to the option selected from the 1st list
+      // Note: no 'click' events fire for <select> elems in Chrome; use a 'change' event instead (more
+      //   relevant anyway)
+      firstParent.addEventListener('change', event => {
+        console.log(`EventListener for ${firstParent.value} fired`);
+        event.stopPropagation();
+
+        // get rid of all but the 1st (title) option of the existing options in the 2nd dropdown list;
+        //   work from the bottom-up or risk indexing issues
+        for (let secondNdx = secondParent.length - 1; secondNdx > 0; secondNdx--) { // a live collection
+          secondParent.removeChild(secondParent.children[secondNdx]);
+        }
+
+        // re-add options to the 2nd dropdown list that are relevant to the selected classification (or
+        //   animal) from the 1st list
+        // if the 1st (title) option was selected from the 1st list, re-add all the options to the 2nd list
+        for (let secondNdx = 1; secondNdx < secondChildren.length; secondNdx++) {
+          let secondOption = secondChildren[secondNdx];
+          if (firstParent.value === firstParent.firstElementChild.value ||
+            filter[firstParent.value].includes(secondOption.value))
+            // the title option was selected OR
+            // a more specific option was selected and the animal is a member of the classification
+            secondParent.appendChild(secondOption);
+        }
+      });
+    }
+
+    selector(classParent, animalParent, filter1);
+    selector(animalParent, classParent, filter2);
+  </script>
+</html>

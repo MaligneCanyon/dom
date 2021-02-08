@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Client (Requesting) Side</title>
+</head>
+<body>
+  <script type="text/javascript">
+    function getAreasOfContinents() {
+      let xhr = new XMLHttpRequest();
+
+      xhr.addEventListener('load', () => {
+        console.log('Areas of continents received!')
+        console.log(xhr.response); // log the resp
+      });
+
+      // xhr.setRequestHeader('Origin', 'http://localhost:8080'); // no ! the 'Origin' req header is added autom by the browser !
+
+      xhr.responseType = 'json';
+      xhr.open('GET', 'http://localhost:3000/areas_of_continents');
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- Note: the html elem has 3 child nodes, not 5 -->
+<!-- (there's no text node before the opening <head> tag or after the </body> closing tag) -->
+<!-- Note: script elem is a childNode of the body elem, despite its placement outside the body -->
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Newsletter Signup</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- A short comment -->
+    <h1>Newsletter Signup</h1>
+    <p class="intro" id="simple">
+      To receive our weekly emails, enter your email address below.
+      <a href="info.html">Get more info</a>.
+    </p>
+    <div class="form">
+      <form>
+        <label>
+          Enter your email:
+          <input name="email" placeholder="user.name@domain.test"/>
+        </label>
+        <p class="controls">
+          <button id="cancelButton">Cancel</button>
+          <button type="submit" id="submitButton">Subscribe</button>
+        </p>
+      </form>
+    </div>
+  </body>
+
+  <script src="walk_nodes.js" type="text/javascript"></script>
+</html>

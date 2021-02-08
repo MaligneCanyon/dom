@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>example 4</title>
+    <meta charset="utf-8" />
+    <style>
+      html {
+        height: 100%;
+        background: lightblue;
+        text-align: center;
+        font-family: monospace;
+        line-height: 1.4;
+        font-size: 14px;
+      }
+
+      td, th {
+        width: 5em
+      }
+
+      tbody tr:first-child td {
+        padding-top: 2em;
+      }
+
+      thead {
+        position: fixed;
+        background: lightblue;
+      }
+
+      button {
+        position: fixed;
+        top: .3em;
+        left: 38em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="clear">Clear</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>type</th>
+          <th>key</th>
+          <th>shiftKey</th>
+          <th>altKey</th>
+          <th>ctrlKey</th>
+          <th>metaKey</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <script type="text/javascript">
+      function display(event) {
+        let tbody = document.querySelector('table tbody');
+        let tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${event.type}</td>
+          <td>${event.key}</td>
+          <td>${event.shiftKey}</td>
+          <td>${event.altKey}</td>
+          <td>${event.ctrlKey}</td>
+          <td>${event.metaKey}</td>
+        `;
+
+        tbody.appendChild(tr);
+        document.body.scrollTop = document.body.scrollHeight;
+      }
+
+      // Note: these event listeners are added outside of the DOMContentLoaded event listener
+      document.addEventListener('keydown', display);
+      document.addEventListener('keyup', display);
+      document.addEventListener('keypress', display);
+
+      document.addEventListener('DOMContentLoaded', () => {
+        let button = document.querySelector('#clear');
+        button.addEventListener('click', () => {
+          let tbody = document.querySelector('table tbody');
+          tbody.innerHTML = '';
+        });
+      });
+    </script>
+  </body>
+</html>

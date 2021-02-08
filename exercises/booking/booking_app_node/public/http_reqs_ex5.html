@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise 5</title>
+    <meta charset="utf-8" />
+    <style>
+      #newStudentForm {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form id="bookScheduleForm">
+      <fieldset>
+        <h2>Book Schedules</h2>
+        <p> <!-- a select list -->
+          <label>Schedule:
+            <select name="schedule">
+              <option value="" selected>Please Select one</option>
+            </select>
+          </label>
+        </p>
+        <p> <!-- an email text input -->
+          <label for="student-email">Email:</label>
+          <input list="student-email" type="email" />
+        </p>
+        <button type="submit">Submit</button>
+      </fieldset>
+    </form>
+
+    <form id="newStudentForm">
+      <fieldset>
+        <h2>New Student Details</h2>
+        <p> <!-- an email text input -->
+          <label for="student-email">Email:</label>
+          <input list="student-email" type="email" />
+        </p>
+        <p> <!-- a simple text input -->
+          <label for="student-name">Name:</label>
+          <input list="student-name" type="text" value="" />
+        </p>
+        <p> <!-- a simple text input -->
+          <label for="booking-seq">Booking Sequence:</label>
+          <input list="booking-seq" type="text" />
+        </p>
+        <button type="submit">Submit</button>
+      </fieldset>
+    </form>
+  </body>
+
+  <script src="xhr_functions.js"></script>
+  <script>
+    // inputs:
+    // - a form w/ a dropdown list of schedules
+    // - a text input for a student email addr
+    // - a form submit button
+    // outputs:
+    // - a form w/ a text display field for a student email addr
+    // - a text input for a student name
+    // - a text display field for a booking seq
+    // - a form submit button
+    // algo:
+    // - get a list of staff members
+    // - gen a list of schedules
+    //   - filter out schedules that are already booked
+    //   - add the remaining schedules to the dropdown list
+    // - if the bookSchedule submit button is clicked
+    //   - submit the booking req
+    //   - if the resp is ok (status is 200)
+    //     - display a msg
+    //     - reset the bookSchedule form
+    //     - remove the booked schedule from the dropdown list
+    //   - else
+    //     - display a msg
+    //     - parse the resp to obtain the booking seq
+    //     - display the newStudent form
+    //       - display the email addr and booking seq
+    //       - display a text input for the student name
+    //       - display a submit button
+    //       - if the newStudent submit button is clicked
+    //         - submit the student data
+    //         - if the resp is ok
+    //           - display a msg
+    //           - submit the booking req
+    //           - if the resp is ok
+    //             - display a msg
+    //             - hide the newStudent form
+    //             - clear the bookSchedule form
+    //           - else
+    //             - display a msg
+    //         - else
+    //           - display a msg
+
+    // - should wait for success of staff member list retrieval before proceeding
+    //   - either means more nesting or using synchronous reqs
+    // - need to dynamically regen list of avail schedules (remove freshly booked schedules)
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let staffMembers = [];
+      // get a list of staff members; do something w/ the data (invoke the cb)
+      let url = 'http://localhost:3000/api/staff_members';
+      getData(url, 200, data => {
+        staffMembers = data; // store the data
+      }, false); // wait for a resp
+
+      // gen a dropdown list of available schedules
+      let schedules = [];
+      const scheduleSelect = document.querySelector('#bookScheduleForm select');
+      // get a list of schedules; do something w/ the data (invoke the cb)
+      url = 'http://localhost:3000/api/schedules';
+      getData(url, 200, data => {
+        schedules = data.filter(schedule => !schedule.student_email); // filter and store the data
+        schedules.forEach(schedule => {
+          let staffName = staffMembers.filter(staff => staff.id === schedule.staff_id)[0].name;
+          // console.log(staffName);
+
+          const option = document.createElement('option');
+          let optionText = `${schedule.id} | ${staffName} | ${schedule.date} | ${schedule.time}`;
+          option.append(optionText);
+          scheduleSelect.appendChild(option);
+        });
+      }, false); // wait for a resp
+
+      // handle the bookSchedule form submission
+      const bookScheduleForm = document.getElementById('bookScheduleForm');
+      bookScheduleForm.addEventListener('submit', event => {
+        // console.log('bookScheduleForm submit event listener fired');
+        event.preventDefault(); // prevent the browser from submitting the form
+
+        // gather the bookSchedule form data
+        let schedule = bookScheduleForm.querySelector('select').value;
+        let scheduleId = Number(schedule.split(' | ')[0]);
+        let studentEmail = bookScheduleForm.querySelector('input[list="student-email"]').value;
+        // console.log({scheduleId, studentEmail});
+        let data = {id: scheduleId, student_email: studentEmail};
+
+        // submit the data
+        // nesting is too complex ... use custom code ***
+        // sendData('http://localhost:3000/api/bookings', 204, data, 'json', event.currentTarget);
+        sendCustomData(data, event.currentTarget);
+
+        function sendCustomData(mainData, form) {
+          let url = 'http://localhost:3000/api/bookings';
+          let req = new XMLHttpRequest();
+          req.open('POST', url);
+          req.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+          data = JSON.stringify(mainData);
+          req.addEventListener('load', () => {
+            const newStudentForm = document.getElementById('newStudentForm');
+            if (req.status === 204) {
+              newStudentForm.style.visibility = 'hidden'; // hide the newStudent form (if it's visible)
+              // alert(req.responseText ? req.responseText : `The data was added`);
+              alert(req.responseText ? req.responseText : `The schedule was booked`);
+              form.reset(); // reset the form
+              // remove the booked schedule from the dropdown list
+              const options = scheduleSelect.querySelectorAll('option');
+              selectedOption = Array.from(options).filter(option => option.value === schedule)[0];
+              scheduleSelect.removeChild(selectedOption);
+            } else {
+              // get the booking seq from the resp text
+              alert(`The data could not be added: ${req.status}\n${req.responseText}`);
+              let bookingSeq = Number(req.responseText.slice(req.responseText.indexOf(':') + 2));
+              // console.log(bookingSeq);
+
+              // make the newStudentForm visible and populate the bookingSeq and student email fields
+              newStudentForm.style.visibility = 'visible';
+              const emailInput = newStudentForm.querySelector('input[list="student-email"]');
+              emailInput.value = studentEmail;
+              const nameInput = newStudentForm.querySelector('input[list="student-name"]');
+              nameInput.value = '';
+              const bookingSeqInput = newStudentForm.querySelector('input[list="booking-seq"]');
+              bookingSeqInput.value = bookingSeq;
+
+              // handle the newStudent form submission
+              newStudentForm.addEventListener('submit', event => {
+                // console.log('newStudentForm submit event listener fired');
+                event.preventDefault(); // prevent the browser from submitting the form
+
+                let data = {email: studentEmail, name: nameInput.value, booking_sequence: bookingSeq};
+                let url = 'http://localhost:3000/api/students';
+                let req = new XMLHttpRequest();
+                req.open('POST', url);
+                req.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                data = JSON.stringify(data);
+                req.addEventListener('load', () => {
+                  if (req.status === 201) {
+                    alert(req.responseText ? req.responseText : `The data was added`);
+                    // now that the student has been added to the db, call sendCustomData
+                    // (again) to book the schedule
+                    sendCustomData(mainData, form); // recursive
+                  } else alert(`The data could not be added: ${req.status}\n${req.responseText}`);
+                });
+
+                req.addEventListener('error', () => {
+                  alert('Some sort of comm error occurred');
+                });
+
+                req.send(data);
+              });
+            }
+          });
+
+          req.addEventListener('error', () => {
+            alert('Some sort of comm error occurred');
+          });
+
+          req.send(data);
+        }
+      });
+    });
+  </script>
+</html>

@@ -1,0 +1,135 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+body {
+  background-color: #226543;
+  /*text-align: center;*/
+}
+
+header h1 {
+  margin: 48px 0 23px 28px;
+  color: white;
+  font-size: 1.8rem;
+}
+
+main li {
+  box-sizing: border-box;
+  color: black;
+  background-color: white;
+  width: 600px;
+  /*height: 50px;*/
+  border-radius: 5px;
+  font-size: 1.2rem;
+  margin: 0 0 20px 68px;
+  padding: 14px 20px;
+}
+
+
+#contextMenu {
+  display: none;
+
+  /*position is determined dynamically in the JS file's showContext() fn*/
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  z-index: 2;
+}
+
+#contextMenu ul {
+  border-radius: 5px;
+  background-color: lightgrey;
+  list-style-type: none;
+  width: 200px;
+}
+
+#contextMenu li {
+  /*color: ?;*/ /*no effect; <li> content is simply an <a>, and the colour of the <a> is what's relevant*/
+  border-bottom: 1px solid white;
+  font-size: 1.2rem;
+  border-radius: 0;
+}
+#contextMenu li:last-of-type {
+  border: none;
+}
+
+#contextMenu a {
+  box-sizing: border-box;
+  color: black;
+  display: inline-block; /*make the entire link clickable*/
+  line-height: 2.5; /*line-height controls the height of an inline elem*/
+  padding: 0 10px;
+  text-decoration: none;
+  width: 100%; /*100% of the <li> width*/
+}
+#contextMenu a:hover {
+  color: white;
+  background-color: grey;
+}
+
+#modal {
+  display: none;
+  box-sizing: border-box;
+  background-color: #eeeeee; /*off-white*/
+  position: absolute;
+
+  /*center horizontally*/
+  left: 50%;
+  width: 400px;
+  margin-left: -200px;
+
+  /*center vertically*/
+  top: 50%;
+  height: 150px;
+  margin-top: -75px;
+
+  border-radius: 5px;
+  z-index: 2;
+}
+
+#modal p {
+  margin: 20px;
+}
+
+#modal button {
+  float: right; /*reverses the order of the buttons*/
+  color: white;
+  font-size: 1.2rem;
+  font-family: serif;
+  margin-top: 40px;
+  padding: 3px 0;
+  width: 60px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+#modal button.yes {
+  margin-right: 5px;
+  background-color: #9f1331;
+  border-color: #9f1331;
+}
+#modal button.no {
+  margin-right: 20px;
+  background-color: #289f37;
+  border-color: #289f37;
+}
+
+/*create an elem to overlay the main window when a <a> is clicked*/
+#overlay {
+  display: none;
+  position: fixed; /*doesn't move if the page is scrolled*/
+
+  /*stretch to fill the window*/
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1; /*overlay the entire window*/
+  content: ""; /*an empty elem*/
+  background-color: rgba(0, 0, 0, 0.5); /*translucent black*/
+  /*Note: the opacity level here should match that used in the JS file's showModal() fn*/
+}

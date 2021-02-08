@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Handlebars pp4-5</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="../../handlebars.min-v4.7.6.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script> -->
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <!-- pp5 -->
+    <script id="posts" type="text/x-handlebars">
+      {{#each posts}} <!-- 'posts' refs the 'postsArr' -->
+        {{> post}}
+      {{/each}}
+    </script>
+
+    <script id="post" type="text/x-handlebars">
+        <article>
+          <h1>{{title}}</h1>
+          <p><time>Posted on {{published}}</time></p>
+          <!-- {{body}} --> <!-- html-escaped (special chars are displayed as-is) -->
+          {{{body}}} <!-- pp2; unescaped (special chars are converted to HTML tags, etc.) -->
+          {{#if tags}} <!-- pp5 -->
+            {{#each tags}} <!-- pp3 -->
+              <!-- <li><strong>{{this}}</strong></li> -->
+              {{> tag}} <!-- pp4 -->
+            {{/each}}
+          {{else}} <!-- pp5 -->
+            <p><strong>Not tagged</strong>
+          {{/if}}
+        </article>
+    </script>
+
+    <!-- pp4 -->
+    <script id="tag" type="text/x-handlebars">
+      <li><strong>{{this}}</strong></li>
+    </script>
+
+    <script>
+      let post = {
+        title: 'Lorem ipsum dolor sit amet',
+        published: 'April 1, 2015',
+        // body: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. (&lt&gt)',
+        // pp2
+        body: '<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. (&lt&gt)</p>',
+        // pp3
+        tags: [
+          "This is a tag",
+          "And a second tag",
+          "Finally, a third tag"
+        ],
+      };
+
+      // pp5
+      // read in the script for the overlord template & compile it, rtn'ing a fn
+      let overlordTemplateFn = Handlebars.compile($('#posts').html());
+
+      // pp1
+      // read in the script for the main template & compile it, rtn'ing a fn
+      let templateFn = Handlebars.compile($('#post').html());
+      // pp5, register template as a partial
+      Handlebars.registerPartial('post', $('#post').html());
+
+      // pp4
+      // read in the script for the tags partial & compile it, rtn'ing a fn
+      // (Note: the fn is never called in this example)
+      let tagFn = Handlebars.compile($('#tag').html());
+      // then register the template as a partial
+      Handlebars.registerPartial('tag', $('#tag').html());
+
+      // pp5
+      let postsArr = [];
+      postsArr.push(post);
+      let newPost = {
+        title: 'Lorem ipsum dolor sit amet',
+        published: 'January 1, 2021',
+        body: '<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. (&lt&gt)</p>',
+        // tags: [
+        // ],
+      };
+      postsArr.push(newPost);
+
+      // pp1
+      // then pass an obj to the main template fn, rtn'ing a str
+      // let template = templateFn(post);
+
+      // pp5
+      // then pass an obj to the overlord template fn, rtn'ing a str
+      let template = overlordTemplateFn({posts: postsArr}); // must pass an obj to the template fn
+
+      // pp1
+      // render the str inside the <body>
+      // $(document.body).html(template); // this works ...
+      $(document.body).append(template); // this works too ...
+    </script>
+  </body>
+</html>

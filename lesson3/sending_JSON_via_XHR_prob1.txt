@@ -1,0 +1,9 @@
+see file: lesson5/sending_JSON_via_XHR_example.html
+
+POST /books HTTP/1.1
+Host: ls-230-book-catalog.herokuapp.com
+Content-Length: 59
+Content-Type: application/json; charset=utf-8
+Accept: */*
+{"title":"Eloquent JavaScript","author":"Marijn Haverbeke"}
+

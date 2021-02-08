@@ -1,0 +1,113 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+html {
+  font: serif;
+}
+
+body {
+  background-color: #52be43; /*green*/
+}
+
+header {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 70px 0 15px;
+}
+
+/*main {*/
+main, footer { /*ex4*/
+  color: black;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 18px 0 20px 20px;
+  border-radius: 5px;
+}
+
+header,
+footer, /*ex4*/
+main {
+  position: relative;
+  left: 50%;
+  width: 800px;
+  margin-left: -400px;
+}
+
+form > span {
+  visibility: hidden;
+  margin-bottom: 10px;
+}
+
+form p {
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+}
+
+form p label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+form p input {
+  display: inline-block;
+  color: grey;
+  background-color: white;
+  font-size: 1.1rem;
+  font-weight: lighter;
+  box-sizing: border-box;
+  width: 300px;
+  height: 38px;
+  padding-left: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+form p input[name="Credit Card"] {
+  width: 65px;
+}
+
+form p input:focus {
+  border-color: #52be43;
+}
+
+form p input.active {
+  color: #be3333;
+  border-color: #be3333;
+}
+
+form p span {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.error {
+  font-size: 1.1rem;
+  color: #be3333; /*red*/
+}
+
+form button {
+  padding: 4px 15px;
+  color: white;
+  background-color: #52be43;
+  font-size: 1.0rem;
+  font-weight: bold;
+  border: 1px solid #52be43;
+  border-radius: 5px;
+}
+
+footer h2 { /*ex4*/
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+footer p { /*ex4*/
+  font-size: 0.9rem;
+  font-family: monospace;
+  padding: 20px 20px 0 20px;
+}

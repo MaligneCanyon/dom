@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      #store {
+        border: solid 1px black;
+        padding: 0 1em;
+        float: left;
+
+        /*SCSS allows query-selector nesting*/
+        h1 {
+          font-size: 1.2em;
+        }
+        h2 {
+          font-size: 1em;
+        }
+        form {
+          button {
+            margin-bottom: 1em;
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Existing Page</h1>
+    <div id="store"></div>
+  </body>
+
+  <script>
+    // embed a "web store" in an existing web page
+    // fetch a list of products and insert it in the div with an id of store
+    document.addEventListener('DOMContentLoaded', () => {
+      let store = document.getElementById('store');
+
+      let request = new XMLHttpRequest();
+      request.open('GET', 'https://ls-230-web-store-demo.herokuapp.com/products');
+      // when the req finishes loading, the load handler stores the resp body inside the <div id="store"> tag
+      request.addEventListener('load', event => store.innerHTML = request.response);
+      request.send();
+
+      // add an event handler that listens for clicks within the embedded content of the initial resp;
+      // the handler should load the new page with `XMLHttpRequest` and insert it into the current page
+      store.addEventListener('click', event => {
+        let target = event.target;
+        if (target.tagName !== 'A') {
+          return;
+        }
+
+        event.preventDefault(); // don't reload the entire page !
+
+        let request = new XMLHttpRequest();
+        request.open('GET', 'https://ls-230-web-store-demo.herokuapp.com' + target.getAttribute('href'));
+        request.addEventListener('load', event => store.innerHTML = request.response);
+        request.send();
+      });
+    });
+  </script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>On the River</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>On The River</h1>
+    <p>The sun is low</p>
+    <p>The waters flow</p>
+
+    <script src="walk_nodes.js" type="text/javascript"></script>
+    <script>
+      // this works:
+      function findAll(elem) { // 'findAll' is a wrapper around the callback and walk fns
+        let elems = [];
+        let callback = function (node) {
+          if (node.nodeName === elem.toUpperCase()) elems.push(node);
+        };
+        walk(document, callback);
+        return elems;
+      }
+      findAll('p').forEach(elem => console.log(elem));
+
+
+      // from the Solution ...
+      // rather than traversing the node tree, just grab all child elems of the document.body
+      // and filter the ones matching the req'd exactNodeType; this works because all the <p>
+      // tag nodes are direct children of document.body
+      function findEvery(exactNodeType) {
+        return Array.from(document.body.childNodes).filter(child => child instanceof exactNodeType);
+      }
+      findEvery(HTMLParagraphElement).forEach(elem => console.log(elem));
+    </script>
+  </body>
+</html>

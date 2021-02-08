@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise 4</title>
+    <meta charset="utf-8" />
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <form id="scheduleForm">
+      <button id="addScheduleButton" type="button">Add Schedule</button>
+      <fieldset name="Schedule 1">
+        <legend>Schedule n</legend>
+        <p> <!-- a select list -->
+          <label>Name:
+            <select name="name">
+              <option value="" selected>Choose a staff member</option>
+            </select>
+          </label>
+        </p>
+        <p> <!-- a simple text input -->
+          <label for="schedule-dates">Date:</label>
+          <input list="schedule-dates" placeholder="mm-dd-yy" />
+        </p>
+        <p> <!-- a simple text input -->
+          <label for="schedule-times">Time:</label>
+          <input list="schedule-times" placeholder="hh:mm" />
+        </p>
+      </fieldset>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+
+  <script src="xhr_functions.js"></script>
+  <script>
+    // inputs:
+    // - a form w/ an add schedule button, multiple schedulers, a submit button
+    //   - each scheduler has a
+    //     - dropdown list of staff members
+    //     - text input for a date
+    //     - text input for a time
+    // algo:
+    // - create a scheduler
+    // - gen a list of staff members
+    //   - add the list of staff members to the scheduler
+    // - if the add schedule button is clicked
+    //   - add another scheduler to the form
+    // - if the submit button is clicked
+    //   - for each scheduler
+    //     - map the scheduler data
+    //   - send the form data
+    //     - if an err occurs
+    //       - output a msg
+    //     - else
+    //       - output a msg
+    //       - clear the form
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // gen a dropdown list of staff members
+      let staffMembers = [];
+      const staffSelect = document.querySelector('#scheduleForm select');
+      // get a list of staff members; do something w/ the data (invoke the cb)
+      let url = 'http://localhost:3000/api/staff_members';
+      getData(url, 200, data => {
+        staffMembers = data; // store the data
+        staffMembers.forEach(staff => {
+          const option = document.createElement('option');
+          option.append(staff.name);
+          staffSelect.appendChild(option);
+        });
+      });
+
+      // manage schedulers
+      const scheduleFieldsets = document.getElementsByTagName('fieldset');
+      Array.from(scheduleFieldsets).forEach(fieldset => setLegend(fieldset));
+      const addScheduleButton = document.getElementById('addScheduleButton');
+      addScheduleButton.addEventListener('click', event => {
+        // console.log('addScheduleButton click event listener fired');
+        let numSchedulers = scheduleFieldsets.length;
+        let lastScheduleFieldset = scheduleFieldsets[numSchedulers - 1];
+        let newScheduleFieldset = lastScheduleFieldset.cloneNode(true);
+        newScheduleFieldset.name = `Schedule ${numSchedulers + 1}`; // adjust the fieldset name
+        setLegend(newScheduleFieldset);
+        lastScheduleFieldset.insertAdjacentElement('afterend', newScheduleFieldset);
+        // console.log(scheduleFieldsets); // a live HTMLCollection
+      });
+
+      // handle form submission
+      const scheduleForm = document.getElementById('scheduleForm');
+      scheduleForm.addEventListener('submit', event => {
+        // console.log('scheduleForm submit event listener fired');
+        event.preventDefault(); // prevent the browser from submitting the form
+
+        // format the data for the server
+        let data = Array.from(scheduleFieldsets).map(scheduler => {
+          // console.log(scheduler);
+          let staffId;
+          let staffName = scheduler.querySelector('select').value;
+          if (staffName)
+            staffId = staffMembers.filter(staff => staff.name === staffName)[0].id;
+          // console.log(staffName, staffId);
+          let date = scheduler.querySelector('input[list="schedule-dates"]').value;
+          let time = scheduler.querySelector('input[list="schedule-times"]').value;
+          return {staff_id: staffId, date, time};
+        });
+
+        url = 'http://localhost:3000/api/schedules';
+        // sendData(url, 201, {'schedules': data}, 'json', event.currentTarget);
+        sendData(url, 201, {'schedules': data}, 'json', this); // this === event.currentTarget
+      });
+    });
+
+    // set the fieldset legend to the value of its 'name' attrib
+    function setLegend(fieldset) {
+      fieldset.querySelector('legend').textContent = fieldset.name;
+    }
+  </script>
+</html>

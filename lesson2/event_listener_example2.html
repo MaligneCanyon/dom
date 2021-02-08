@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>example 2</title>
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+    <textarea id="message"></textarea>
+    <button id="alert">Alert</button>
+  </body>
+
+  <script>
+    function displayAlert() {
+      let message = document.getElementById('message').value;
+      alert(message);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let button = document.getElementById('alert');
+      // button.addEventListener('click', displayAlert);
+      button.onclick = displayAlert; // alt method
+    });
+  </script>
+</html>

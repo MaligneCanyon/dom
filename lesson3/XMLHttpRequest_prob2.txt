@@ -1,0 +1,1 @@
+The 'responseText' property contains the resp body of a successful req, if req.responseType is '' (as in this case)

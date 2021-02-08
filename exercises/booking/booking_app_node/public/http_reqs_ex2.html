@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise 2</title>
+    <meta charset="utf-8" />
+    <style>
+    </style>
+  </head>
+
+  <body>
+  </body>
+
+  <script>
+    // processing rtn'd data:
+      // inputs:
+      // - arr of inputObjs
+      // outputs:
+      // - outputObj w/ the following k:v pairs
+      //   - key = staff_id
+      //   - value = count of schedules for that staff_id
+      // struct:
+      // - obj
+      // algo:
+      // - for each arr elem
+      //   - if the outputObj has a key matching the staff_id of the inputObj
+      //     - incr the value of outputObj.key
+      //   - else
+      //     - set the value of outputObj.key to 1
+      // - log the outputObj
+
+    // Create an HTML file in the public directory of the app, access that file (page) via the proper path, and run the JS code from the web page.
+    // For example, if you've created a public/http_reqs_ex2.html file you'll access it via: http://localhost:3000/http_reqs_ex2.html
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const req = new XMLHttpRequest();
+      req.open('GET', 'http://localhost:3000/api/schedules');
+
+      req.addEventListener('load', () => {
+        let data;
+        let alertStr = 'The following number of schedules are available for booking:\n';
+        let staffSchedules = {};
+        if (req.status === 200) {
+          console.log(`Success: ${req.status}`);
+          // console.log(Array.from(req.responseText)); // a long str
+          // console.log(Array.from(req.response)); // a long str
+          data = JSON.parse(req.response);
+          console.log(data); // an arr of objs
+
+          if (data.length) { // process the data
+            data.forEach(schedule => {
+              let id = String(schedule.staff_id);
+              if (!schedule.student_email) { // an available schedule
+                if (Object.keys(staffSchedules).includes(id)) staffSchedules[id]++;
+                else staffSchedules[id] = 1;
+                // console.log(schedule);
+              }
+            });
+
+            for (key in staffSchedules)
+              alertStr += `staff ${key}: ${staffSchedules[key]}, `;
+            alertStr = alertStr.slice(0, -2); // get rid of the trailing ', ' on the last entry
+
+            alert(alertStr); // alert the results
+          } else alert('There are currently no schedules available for booking.');
+        } else alert(`Something unexpected happened: ${req.status}`);
+      });
+
+      req.timeout = 7010; // times out frequently if only 5 seconds available
+      req.addEventListener('timeout', () => {
+        alert('The request timed out.  Please try again.');
+      });
+
+      req.addEventListener('loadend', () => {
+        // alert('The request cycle has completed.'); // annoying
+        console.log('The request cycle has completed.');
+      });
+
+      req.addEventListener('error', () => {
+        alert('Some sort of comm error occurred.');
+      });
+
+      req.send();
+    });
+  </script>
+</html>

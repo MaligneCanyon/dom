@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Data Attribs example</title>
+    <meta charset="utf-8" />
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <div id="gold" data-block="gold">
+      <h1>Gold Sponsors</h1>
+    </div>
+
+    <script>
+      var gold = document.getElementById('gold');
+      console.table(gold.dataset); // log the data attrib k:v pairs
+        // Note: if the browser doesn't build a table, it will incorrectly log (the updated values)
+        // {'block: silver', sponsor: "sponsorname"} in both Firefox and Chrome (see below)
+      console.log(gold.dataset); // log the data attrib k:v pairs
+      gold.dataset.block = 'silver'; // chg the value of a data attrib
+      gold.dataset.sponsor = 'sponsorname'; // add a data attrib
+      // delete gold.dataset.block; // remove a data attrib
+      // console.table(gold.dataset); // log the data attrib k:v pairs
+    </script>
+  </body>
+</html>

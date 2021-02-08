@@ -1,0 +1,80 @@
+<style>
+#elem0 {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  background-color: orange;
+  text-align: center;
+  cursor: pointer;
+}
+
+#elem1 {
+  background-color: green;
+  position: relative;
+  top: 25px;
+  left: 25px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#elem2 {
+  background-color: blue;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 150px;
+  height: 150px;
+}
+
+#elem3 {
+  background-color: red;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 100px;
+  height: 100px;
+  line-height: 25px;
+}
+
+#elem4 {
+  background-color: yellow;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+</style>
+
+<div id="elem0">0</div>
+<div id="elem1">1
+  <div id="elem2">2
+    <div id="elem3">3
+      <div id="elem4">4
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let elem0 = document.querySelector('#elem0');
+  let elem1 = document.querySelector('#elem1');
+  let elem4 = document.querySelector('#elem4');
+
+  elem0.addEventListener('click', event => alert(event.currentTarget.id));
+  elem1.addEventListener('click', event => alert(event.currentTarget.id), true);
+  elem4.addEventListener('click', event => alert(event.currentTarget.id));
+</script>
+
+<!--
+clicking the elem4 (yellow) box will only fire the elem1 and elem4 event listeners
+(in that order); the elem0 event listener is not nested w/i elems 1-4 so it does
+not fire in the capturing/bubbling sequence when the yellow box is clicked
+
+clicking the elem0 (orange) box will only fire the elem0 event listener;
+that div is not nested w/i any other elem that has an attached event listener,
+so no capturing/bubbling sequence to the other event listeners occurs
+ -->

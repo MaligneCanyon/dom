@@ -1,0 +1,49 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+body {
+  background-color: #999900;
+  text-align: center;
+}
+
+header {
+  margin: 20px 0;
+  color: white;
+  font-size: 2.0rem;
+}
+
+main {
+  width: 600px;
+  box-sizing: border-box;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 auto 10px; /*'auto' centers the elem horizontally*/
+  padding: 1.6%;
+}
+
+section > h2, section > p {
+  text-align: left;
+  padding-bottom: 20px;
+}
+
+section > h2 {
+  font-size: 1.5rem;
+  padding-top: 20px;
+}
+
+section > p {
+  font-size: 1.0rem;
+}
+
+section > button { /*could style the buttons a little more elegantly ...*/
+  display: block; /*align the button to the left*/
+  font-size: 1.0rem;
+  color: white;
+  background-color: #999900;
+  border-radius: 5px;
+  border: 1px solid #999900; /*replace the default border*/
+}

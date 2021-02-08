@@ -1,0 +1,78 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+html {
+  font-family: serif;
+}
+
+body {
+  background-color: #eee9ce; /*beige*/
+}
+
+
+header {
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 20px 0 30px;
+}
+
+main {
+  box-sizing: border-box;
+  color: black;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+header,
+main {
+  position: relative;
+  left: 50%;
+  width: 600px;
+  margin-left: -300px;
+}
+
+form legend {
+  margin-bottom: 10px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+form p {
+  visibility: hidden;
+  overflow: wrap;
+  margin: 10px 0;
+  padding: 5px;
+  border: none;
+}
+
+.correct {
+  border: 1px solid green;
+}
+
+.wrong {
+  border: 1px solid red;
+}
+
+form button {
+  display: inline-block;
+  color: black;
+  background-color: #cccccc; /*grey*/
+  font-size: 1.1rem;
+  font-family: serif;
+  margin-right: 6px;
+  padding: 4px 15px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+form button.active {
+  background-color: #55ec39; /*green*/
+  border: 1px solid #55ec39;
+}

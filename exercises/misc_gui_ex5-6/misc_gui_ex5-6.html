@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Cars 4 Sale</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../whitespace-reset.css" />
+    <link rel="stylesheet" href="misc_gui_ex5-6.css" />
+    <script src="../../handlebars.min-v4.7.6.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Buy Used Cars</h1>
+      <div>
+        <p>Make</p>
+        <select id="make">
+          <option value="All" selected>All</option>
+        </select>
+
+        <p>Model</p>
+        <select id="model">
+          <option value="All" selected>All</option>
+        </select>
+
+        <p>Price</p>
+        <select id="price">
+          <option value="Any" selected>Any</option>
+        </select>
+
+        <p>Year</p>
+        <select id="year">
+          <option value="Any" selected>Any</option>
+        </select>
+        <button>Filter</button>
+      </div>
+    </header>
+
+    <main>
+      <ul>
+<!--
+        <li></li>
+ -->
+      </ul>
+    </main>
+
+    <script id="cars" type="text/x-handlebars">
+      {{#each cars}}
+        {{> carTemplate}}
+      {{/each}}
+    </script>
+
+    <script id="car" type="text/x-handlebars">
+      <li data-id="{{id}}">
+        <img src="{{image}}"</img>
+        <h2>{{make}}</h2>
+        <h2>{{model}}</h2>
+        <p>Year: {{year}}</p>
+        <p>Price: ${{price}}</p>
+        <button>Buy</button>
+      </li>
+    </script>
+
+    <script src="misc_gui_ex5-6.js"></script>
+  </body>
+</html>

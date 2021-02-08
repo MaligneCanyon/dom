@@ -1,0 +1,114 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+body {
+  background-color: #226543;
+  /*text-align: center;*/
+}
+
+header h1 {
+  margin: 48px 0 23px 28px;
+  color: white;
+  font-size: 1.8rem;
+}
+
+li div {
+  box-sizing: border-box;
+  background-color: white;
+  width: 600px;
+  /*height: 50px;*/
+  border-radius: 5px;
+  margin: 0 0 20px 68px;
+  padding: 2px 0;
+  overflow: hidden;
+}
+
+li h2, li a {
+  font-size: 1.1rem;
+}
+
+li h2 {
+  float: left;
+  color: black;
+  font-weight: normal;
+  margin: 12px 0 12px 20px;
+}
+
+li a {
+  float: right;
+  color: red;
+  text-decoration: none;
+  margin-top: 9px;
+  margin-right: 20px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+li a:hover {
+  font-size: 1.6rem;
+}
+
+#modal {
+  display: none;
+  box-sizing: border-box;
+  background-color: #eeeeee; /*off-white*/
+  position: absolute;
+
+  /*center horizontally*/
+  left: 50%;
+  width: 400px;
+  margin-left: -200px;
+
+  /*center vertically*/
+  top: 50%;
+  height: 150px;
+  margin-top: -75px;
+
+  border-radius: 5px;
+  z-index: 2;
+}
+
+#modal p {
+  margin: 20px;
+}
+
+#modal button {
+  float: right; /*reverses the order of the buttons*/
+  color: white;
+  font-size: 1.2rem;
+  font-family: serif;
+  margin: 40px 20px 0 0;
+  padding: 3px 0;
+  width: 60px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+#modal button.yes {
+  background-color: #9f1331;
+  border-color: #9f1331;
+}
+#modal button.no {
+  background-color: #289f37;
+  border-color: #289f37;
+}
+
+/*create an elem to overlay the main window when an <a> is clicked*/
+#overlay {
+  display: none;
+  position: fixed; /*doesn't move if the page is scrolled*/
+
+  /*stretch to fill the window*/
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1; /*overlay the entire window*/
+  content: ""; /*an empty elem*/
+  background-color: rgba(0, 0, 0, 0.5); /*translucent black*/
+}

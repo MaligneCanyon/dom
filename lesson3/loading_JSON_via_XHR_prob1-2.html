@@ -1,0 +1,23 @@
+<script>
+  // use either (A) or (B), but not both
+
+  let request = new XMLHttpRequest();
+  request.open('GET', 'https://api.github.com/repos/rails/rails'); // prob1
+  // request.open('GET', 'hts://api.github.com/repos/rails/rails'); // prob2
+  // request.responseType = 'json'; // (A)
+
+  request.addEventListener('load', event => {
+    let data = request.response;
+    data = JSON.parse(data); // (B)
+    if (data) {
+      // do something with the data
+      console.log('status code:', request.status, '; open issues:', data.open_issues);
+    } else console.log('Cannot parse the received response as JSON.');
+  });
+
+  request.addEventListener('error', event => { // prob2 // will fire if no inet connection
+    console.log('The request could not be completed!');
+  });
+
+  request.send();
+</script>

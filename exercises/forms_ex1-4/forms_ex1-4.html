@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Sine ~ Up</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../whitespace-reset.css" />
+    <link rel="stylesheet" href="forms_ex1-4.css" />
+  </head>
+
+  <body>
+    <header>
+      <p>Sign Up Form</p>
+    </header>
+
+    <main>
+      <!-- <form novalidate> --> <!-- 'novalidate' turns off autom form validation -->
+      <form action="#" method="POST" novalidate> <!-- ex4 -->
+        <span class="error">Form cannot be submitted until errors are corrected.</span>
+        <p> <!-- should replace <p> w/ <fieldset> ? -->
+          <!-- <label for="firstName">First Name</label> -->
+          <label>First Name</label> <!-- we really don't want the label area to be clickable -->
+          <!-- <input type="text" id="firstName" name="First Name" required> -->
+          <input type="text" id="first_name" name="First Name" required> <!-- ex4; match query str format -->
+          <span class="error"></span>
+        </p>
+        <p>
+          <label>Last Name</label>
+          <input type="text" id="last_name" name="Last Name" required>
+          <span class="error"></span>
+        </p>
+        <p>
+          <label>Email Address</label>
+          <!-- <input type="email" id="email" name="Email Address" required -->
+          <!-- type="email" does not sup the setSelectionRange() method -->
+          <input type="text" id="email" name="Email Address" required
+            pattern=".+@.+">
+          <span class="error"></span>
+        </p>
+        <p>
+          <label>Password</label>
+          <input type="password" id="pswd" name="Password" required
+            pattern=".{10,}"> <!-- 10 or more chars -->
+          <span class="error"></span>
+        </p>
+        <p>
+          <label>Phone Number</label>
+          <input type="tel" id="phone" name="Phone Number"
+            pattern="^\d{3}-\d{3}-\d{4}$">
+          <span class="error"></span>
+        </p>
+        <p> <!-- ex2b, ex3a -->
+          <label>Credit Card</label>
+          <input type="text" id="cc0" name="Credit Card" pattern="^\d{4}$" maxlength="4"> -
+          <input type="text" id="cc1" name="Credit Card" pattern="^\d{4}$" maxlength="4"> -
+          <input type="text" id="cc2" name="Credit Card" pattern="^\d{4}$" maxlength="4"> -
+          <input type="text" id="cc3" name="Credit Card" pattern="^\d{4}$" maxlength="4">
+          <span class="error"></span>
+        </p>
+        <button type="submit" name="signUp">Sign Up</button>
+      </form>
+    </main>
+
+    <footer> <!-- ex4 -->
+      <h2>Serialized Form</h2>
+      <p></p>
+    </footer>
+
+    <script src="forms_ex1-4.js"></script>
+  </body>
+</html>

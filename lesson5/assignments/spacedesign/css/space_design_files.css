@@ -1,0 +1,9 @@
+@import url("../../../../../whitespace-reset.css");
+@import url("space_design_body.css");
+@import url("space_design_header.css");
+@import url("space_design_nav.css");
+@import url("space_design_main.css");
+@import url("space_design_footer.css");
+
+/*if the whitespace-reset.css file can't be found, a significant gap will
+appear btwn the main and footer portions of the Team page*/

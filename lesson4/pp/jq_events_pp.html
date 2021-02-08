@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>jQuery Events pp</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <!-- allow the user to enter a single char -->
+    <form action="#" method="post">
+      <fieldset>
+        <label>
+          Input a Single Char
+          <input type="text" value="" maxlength="1">
+        </label>
+      </fieldset>
+      <input type="submit" value="Submit">
+      <input type="reset">
+    </form>
+    <a href="#">Toggle</a>
+    <div id="accordion">
+      <p>A paragraph of text.</p>
+    </div>
+  </body>
+
+  <script>
+    $(function () {
+      const $form = $('form');
+      let char = '';
+
+      // form submit event
+      // $form.on('submit', function (event) {
+      $form.submit(function () { // alt syntax; don't really need to pass in the event obj
+        event.preventDefault(); // prevent the browser from submitting the form
+
+        // read in the entered char
+        char = $(this).find('input[type="text"]').val();
+        console.log(`the entered key is '${char}'`);
+
+        // unbind any previous keypress event, then bind a new keypress event to 'document'
+        $(document).off('keypress').on('keypress', function () {
+          // check whether or not the correct key was pressed
+          if (event.key !== char) {
+            console.log(`'${event.key}' is the incorrect key; ` +
+              `the correct key is '${char}'`);
+            return;
+          }
+          console.log('the correct key was entered');
+
+          // since the correct key was pressed, trigger the toggle link click event cb
+          $('a').trigger('click');
+        });
+      });
+
+      // enable the toggle link
+      $('a').on('click', function () {
+        event.preventDefault();
+
+        // find the accordion elem and call the built-in slideToggle method on it
+        $('#accordion').slideToggle(500);
+      });
+
+      $form.on('reset', function () {
+        char = '';
+        $(document).off('keypress');
+      });
+    });
+  </script>
+</html>

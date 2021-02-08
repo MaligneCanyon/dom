@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>jQuery Events</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <style>
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li><a href="#">Apples</a></li>
+      <li><a href="#">Bananas</a></li>
+      <li><a href="#">Oranges</a></li>
+    </ul>
+
+    <!-- allow the user to enter a fruit -->
+    <form action="#" method="post">
+      <fieldset>
+        <input type="text">
+        <input type="submit" value="Choose"> <!-- should use a <button> instead -->
+      </fieldset>
+    </form>
+
+    <p>Choose your favorite fruit!</p>
+
+    <script>
+      $(function() { // wait for the document to load
+        var $p = $('p');
+        const OUTPUT = 'Your favorite fruit is ';
+
+        // the cb is bound to each anchor, making one event handler in memory for each <li>;
+        // more effic to attach the same event to the parent <ul> elem
+
+        // // $('a').on('click', function(event) {
+        // $('a').click(function(event) {
+        //   event.preventDefault(); // prevent the browser from following the link
+        //   // produce a jqObj from the event target
+        //   var $anchor = $(this); // var $anchor = $(event.target) would work too ...
+        //   $p.text(OUTPUT + $anchor.text()); // replace the paragraph text
+        //   console.log(`'${this.innerHTML}' was clicked`);
+        // });
+
+        $('ul').on('click', 'a', function(event) { // monitor <a> elems w/i the <ul> parent
+          event.preventDefault();
+          var $anchor = $(this).closest('li');
+          // var $anchor = $(this).closest('a'); // this works too ...
+          $p.text(OUTPUT + $anchor.text()); // replace the paragraph text
+          console.log(`'${this.innerHTML}' was clicked`);
+        });
+
+        // $('form').on('submit', function(event) {
+        $('form').submit(function(event) {
+          event.preventDefault(); // prevent the browser from submitting the form (which reloads the page)
+          var $input = $(this).find('input[type=text]');
+          $p.text(OUTPUT + $input.val());
+          console.log(`'${$input.val()}' was entered`);
+        });
+      });
+    </script>
+  </body>
+</html>

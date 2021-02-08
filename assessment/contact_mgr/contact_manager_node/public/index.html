@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Mgr</title>
+    <link rel="stylesheet" href="stylesheets/whitespace-reset.css" />
+    <link rel="stylesheet" href="stylesheets/contact_mgr.css" />
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/handlebars.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Contact Manager</h1>
+      <p>Using Backbone.js, Localstorage, RequireJS, Handlebars and Bootstrap</p>
+    </header>
+
+    <main> <!-- load content as req'd -->
+      <!-- <div class="visible"> --> <!-- visible by default -->
+      <div class="visible sliders"> <!-- visible by default -->
+        <section id="section1">
+          <button>Add Contact</button>
+          <label>Tags:</label>
+          <select id="tagList1">
+            <option value="None" selected>None</option>
+          </select>
+          <!-- placeholder is not autom'ly cleared when text is entered ??? -->
+          <!-- <input type="search" placeholder="Search" /> -->
+          <input type="text" id="search" value="Search" />
+        </section>
+
+        <section id="section2"> <!-- use a hb template -->
+          <ul>
+            <!-- sample contact info -->
+<!--
+            <li>
+              <h2>Full Name</h2>
+              <h3>Phone Number:</h3>
+              <p>1234567</p>
+              <h3>Email:</h3>
+              <p>1st@contact.com</p>
+              <h3>Tags:</h3>
+              <p>friend, co-worker</p>
+              <button>Edit</button>
+              <button>Delete</button>
+            </li>
+ -->
+          </ul>
+        </section>
+
+        <section id="section3" class="hidden">
+          <p>There are no contact names<span></span><b></b>.</p>
+        </section>
+      </div>
+
+      <!-- hidden by default -->
+      <form data-id="" class="hidden sliders" action="#" method="POST" novalidate>
+        <h2>Create/Edit Contact</h2>
+        <fieldset>
+          <div>
+            <label>Full name:</label> <!-- we don't want the label area to be clickable -->
+            <input type="text" id="full_name" name="Full Name" required />
+            <span class="error"></span>
+          </div>
+          <div>
+            <label>Email address:</label>
+            <input type="text" id="email" name="Email Address" required
+              pattern=".+@.+\..+" /> <!-- i.e. something@something.something -->
+              <!-- pattern=".+@.+"> -->
+            <span class="error"></span>
+          </div>
+          <div>
+            <label>Telephone number:</label> <!-- could use type="tel" -->
+            <input type="text" id="phone_number" name="Phone Number" required />
+            <span class="error"></span>
+          </div>
+          <div>
+            <label>Tags:</label>
+            <input type="text" id="tags" name="Tags" />
+            <select id="tagList2">
+              <option value="None" selected>None</option>
+            </select>
+            <span class="error"></span>
+          </div>
+          <button type="submit">Submit</button>
+          <button type="reset">Cancel</button>
+        </fieldset>
+      </form>
+    </main>
+
+    <footer>
+      <p>
+        Developed by <a href="https://www.devsaran.com/">Devsaran.com</a> and <a href="https://www.239listing.com/">239 Listing Real Estate</a>.
+      </p>
+    </footer>
+
+    <!-- handlebars scripts -->
+    <script id="contacts" type="text/x-handlebars">
+      {{#each contacts}}
+        {{> contactTemplate}}
+      {{/each}}
+    </script>
+
+    <script id="contact" type="text/x-handlebars">
+      <li data-id="{{id}}">
+        <h2>{{full_name}}</h2>
+        <h3>Phone Number:</h3>
+        <p>{{phone_number}}</p>
+        <h3>Email:</h3>
+        <p>{{email}}</p>
+        <h3>Tags:</h3>
+        <p>{{tags}}</p>
+        <button method="PUT" target="http://localhost:3000/api/contacts/{{id}}">Edit</button>
+        <button method="DELETE" target="http://localhost:3000/api/contacts/{{id}}">Delete</button>
+      </li>
+    </script>
+
+    <script src="javascripts/contact_mgr.js"></script>
+  </body>
+</html>

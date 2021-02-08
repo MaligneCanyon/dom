@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Events Tracker</title>
+    <meta charset="utf-8">
+    <style>
+      #red, #blue, #green, #orange {
+        cursor: pointer;
+        color: white;
+        padding: 10px;
+        margin: 10px;
+      }
+
+      #red {
+        width: 400px;
+        height: 400px;
+        background: red;
+      }
+
+      #blue {
+        width: 200px;
+        height: 200px;
+        background: blue;
+      }
+
+      #orange {
+        width: 100px;
+        height: 100px;
+        background: orange;
+      }
+
+      #green {
+        width: 50px;
+        height: 50px;
+        background: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="red">Red
+      <div id="blue">Blue</div>
+      <div id="orange">Orange
+        <div id="green">Green</div>
+      </div>
+    </div>
+
+    <script>
+      // Note: 'track' doesn't add events to a 'tracker' object per se;
+      // IIFE invocation of the 'tracker' fn creates a closure and rtns an obj w/ an 'add' method;
+      // the 'add' method allows 'track' to add events to a private arr w/i the closure
+
+      let tracker = (() => {
+        let events = []; // private data
+        return {
+          list () { return events.slice(); }, // rtn a copy of the events; prevents manip of private data
+          elements () { return events.map(event => event.target); },
+          add (event) { events.push(event); },
+          clear () {
+            events = [];
+            return 0;
+          },
+        };
+      })();
+
+      function track(cb) {
+        return function () {
+          if (!tracker.list().includes(event)) tracker.add(event); // record the event
+          cb(event); // invoke the cb
+        };
+      }
+
+      // Use "click" event listeners for the four elements:
+      const divRed = document.querySelector('#red');
+      const divBlue = document.querySelector('#blue');
+      const divOrange = document.querySelector('#orange');
+      const divGreen = document.querySelector('#green');
+
+      // Impt: instead of passing the cb directly to addEventListener,
+      // the cb is passed to 'track' (which in turn is passed to addEventListener)
+
+      divRed.addEventListener('click', track(event => {
+        document.body.style.background = 'red';
+      }));
+
+      divBlue.addEventListener('click', track(event => {
+        event.stopPropagation();
+        document.body.style.background = 'blue';
+      }));
+
+      divOrange.addEventListener('click', track(event => {
+        document.body.style.background = 'orange';
+      }));
+
+      divGreen.addEventListener('click', track(event => {
+        document.body.style.background = 'green';
+      }));
+
+      // Assume that the user clicks the elements in the following order:
+      //   div#blue, div#red, div#orange, and div#green.
+      setTimeout(() => {
+        // Impt: since 'tracker' is invoked in the outer scope, it must be def'd there;
+        // use an IIFE that rtns an obj so that the 'tracker' methods are accessible here
+
+        console.log(tracker.list().length);
+        // 4
+        console.log(tracker.elements());
+        // [div#blue, div#red, div#orange, div#green]
+        console.log(tracker.elements()[0] === document.querySelector('#blue'));
+        // true
+        console.log(tracker.elements()[3] === document.querySelector('#green'));
+        // true
+        console.log(tracker.clear());
+        // 0
+        console.log(tracker.list());
+        // []
+        tracker.list()[0] = 'abc'; // test prevention of access to private data
+        console.log(tracker.list().length);
+        // 0
+        console.log(tracker.list());
+        // []
+      }, 8000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Exercise 2</title>
+    <style type="text/css">
+      #container {
+        height: 50px;
+        width: 100px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+  </body>
+
+  <script>
+    const container = document.querySelector('#container');
+
+    document.querySelector('html').addEventListener('click', () => {
+      // document.querySelector('#container').style = 'display: none';
+      container.style = 'display: none';
+    // });
+    }, true);
+
+    document.querySelector('#container').addEventListener('click', event => {
+      // event.stopPropagation();
+      container.style = 'display: visible';
+    });
+
+
+    // // the Solution ...
+    // document.querySelector('html').addEventListener('click', (event) => {
+    //   const container = document.querySelector('#container');
+    //   if (!container.contains(event.target)) container.style = 'display: none';
+    // });
+  </script>
+</html>

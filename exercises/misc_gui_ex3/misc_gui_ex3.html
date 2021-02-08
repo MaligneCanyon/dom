@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Toduhs</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../whitespace-reset.css" />
+    <link rel="stylesheet" href="misc_gui_ex3.css" />
+    <script src="../../handlebars.min-v4.7.6.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Todos</h1>
+    </header>
+
+    <main>
+      <ul>
+<!--
+        <li>
+          <div>
+            <h2></h2>
+            <a>X</a>
+          </div>
+        </li>
+ -->
+      </ul>
+    </main>
+
+    <div id="modal" data-id="">
+      <p>Are you sure you want to delete this todo ?</p>
+      <button class="no">No</button>
+      <button class="yes">Yes</button>
+    </div>
+
+    <div id="overlay"></div>
+
+    <script id="todos" type="text/x-handlebars">
+      {{#each todos}}
+        {{> todoTemplate}}
+      {{/each}}
+    </script>
+
+    <script id="todo" type="text/x-handlebars">
+      <li>
+        <div>
+          <h2>{{title}}</h2>
+          <a href="#" data-id="{{id}}">X</a>
+        </div>
+      </li>
+    </script>
+
+    <script src="misc_gui_ex3.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>The Event Obj - prob2</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+      .x {
+        position: absolute;
+        transform: rotate(45deg);
+        top: 20px;
+        left: 20px;
+      }
+
+      .x .horizontal {
+        width: 45px;
+        height: 5px;
+        position: absolute;
+        left: -20px;
+        background: red;
+      }
+
+      .x .vertical {
+        height: 45px;
+        width: 5px;
+        background: red;
+        position: absolute;
+        left: 0px;
+        top: -20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="x">
+      <div class="horizontal"></div>
+      <div class="vertical"></div>
+    </div>
+
+    <script type="text/javascript">
+      document.addEventListener('mousemove', event => {
+        const cross = document.querySelector('.x');
+        cross.style.left = String(event.clientX) + 'px';
+        cross.style.top = String(event.clientY) + 'px';
+        console.log(event.clientX, event.clientY);
+      });
+    </script>
+  </body>
+</html>

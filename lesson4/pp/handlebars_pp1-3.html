@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Handlebars pp1-3</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="../../handlebars.min-v4.7.6.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script> -->
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <script id="post" type="text/x-handlebars">
+      <article>
+        <h1>{{title}}</h1>
+        <p><time>Posted on {{published}}</time></p>
+        <!-- {{body}} --> <!-- html-escaped (special chars are displayed as-is) -->
+        {{{body}}} <!-- pp2; unescaped (special chars are converted to HTML tags, etc.) -->
+        {{#each tags}} <!-- pp3 -->
+          <li><strong>{{this}}</strong></li>
+        {{/each}}
+      </article>
+    </script>
+
+    <script>
+      let post = {
+        title: 'Lorem ipsum dolor sit amet',
+        published: 'April 1, 2015',
+        // body: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. (&lt&gt)',
+        // pp2
+        body: '<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. (&lt&gt)</p>',
+        // pp3
+        tags: [
+          "This is a tag",
+          "And a second tag",
+          "Finally, a third tag"
+        ],
+      };
+
+
+      // console.log(typeof jQuery); //=> function
+      // console.log(typeof Handlebars); //=> object
+
+      // let $a = {};
+      // console.log(!!$a.jquery); //=> F; not a jQ obj
+      // let $b = $(document.body);
+      // console.log(!!$b.jquery); //=> T; a jQ obj
+
+
+      // pp1
+      let templateFn = Handlebars.compile($('#post').html()); // read in the script & compile it, rtn'ing a fn
+      let templateStr = templateFn(post); // pass an obj to the fn, rtn'ing a str
+      // $(document.body).html(templateStr); // render the str inside the <body>
+      $(document.body).append(templateStr); // this works too ...
+    </script>
+  </body>
+</html>

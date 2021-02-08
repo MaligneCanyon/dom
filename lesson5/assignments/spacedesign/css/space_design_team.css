@@ -1,0 +1,88 @@
+@import url("space_design_files.css");
+
+p {
+  padding-bottom: 125px;
+}
+
+section ul {
+  list-style-type: none;
+  padding-bottom: 210px;
+}
+
+section ul li {
+  display: inline-block;
+  padding: 0 28px;
+}
+
+figure {
+  display: block;
+}
+
+figure img {
+  height: 150px;
+  width: 140px;
+}
+
+figcaption {
+  padding-top: 20px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #3e59b2; /*blue*/
+}
+
+
+/*new*/
+
+
+#modal {
+  display: none;
+  box-sizing: border-box;
+  background-color: white;
+  position: absolute;
+  left: 50%;
+  width: 800px;
+  margin-left: -400px;
+  height: 300px;
+  z-index: 2;
+}
+
+/*create an elem to overlay the main window when an <img> is clicked*/
+#overlay {
+  display: none;
+  position: fixed; /*doesn't move if the page is scrolled*/
+
+  /*stretch to fill the window*/
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1; /*overlay the entire window*/
+  content: ""; /*an empty elem*/
+  background-color: rgba(0, 0, 0, 0.4); /*translucent black*/
+}
+
+#modal figure {
+  overflow: hidden;
+}
+
+#modal img:nth-of-type(1) {
+  float: left;
+  height: 100px;
+  width: 93px;
+}
+
+#modal figcaption {
+  float: left;
+  margin-top: 65px;
+}
+
+#modal img:nth-of-type(2) {
+  float: right;
+  height: 30px;
+  width: 30px;
+}
+
+#modal img, #modal p {
+  margin: 20px;
+}

@@ -1,0 +1,20 @@
+    How many staff are there?
+http://localhost:3000/api/staff_members => 5
+
+    How many students are there?
+http://localhost:3000/api/students => 5
+
+    How many schedules exist?
+http://localhost:3000/api/schedules => 9
+
+    How many schedules have bookings?
+http://localhost:3000/api/schedules => 3; 3 schedules have a student email address listed
+
+    Do all staff have schedules?
+http://localhost:3000/api/schedules => no; only 3 staff ids listed
+"There is no (single) route that will provide this information."
+
+    Did all students book a schedule?
+http://localhost:3000/api/schedules => no; only 3 student email addresses listed
+"There is no (single) route that will provide this information."
+

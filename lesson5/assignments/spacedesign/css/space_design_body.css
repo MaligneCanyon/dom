@@ -1,0 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: normal 20px 'Nunito', Arial, sans-serif;
+  line-height: 28px;
+  text-align: center;
+  color: #45494d; /*gray*/
+  background: url("../images/bg_body.gif") repeat;
+  background-position: 44px 0;
+}

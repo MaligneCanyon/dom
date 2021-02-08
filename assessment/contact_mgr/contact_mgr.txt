@@ -1,0 +1,19 @@
+todos:
+
+- mobile ready ?
+x- tags implemented ?
+- obj creation patterns ?
+	- contact obj
+	x- input obj
+- utilize a reset() method
+x- constraint validation
+- add button icons
+x- disable tab key
+x- slidetoggle
+x- msg(s) when no contacts
+x- if a contact is added/updated, clear the Search field
+x- fix section1 css
+x- test form input field err msgs
+x- css for Tags button
+x- run code thru a linter
+

@@ -1,0 +1,35 @@
+<!-- version1 -->
+<div>
+  <p>Then press the <em>Draw</em> button</p>
+</div>
+
+<!--
+Note that no text node exists immediately after the (missing) opening <body> tag,
+  nor immediately before the (missing) closing </body> tag
+11 nodes: html, head, body + any descendant elems and text/comment nodes
+<html $1>
+<head $2>
+<body $3>
+<div $4> $5
+  <p $6>Then press the $7<em $8>Draw $9</em> button $10</p> $11
+</div>
+</body>
+</html>
+ -->
+
+
+<!-- version2 -->
+<div><p>Then press the <em>Draw</em> button.</p></div>
+
+<!--
+9 nodes (2 less due to 2 fewer '\n' chars)
+<html $1>
+<head $2>
+<body $3>
+<div $4><p $5>Then press the $6<em $7>Draw $8</em> button. $9</p></div>
+</body>
+</html>
+-->
+
+
+<script src="../lesson1/display_nodes.js" type="text/javascript"></script>

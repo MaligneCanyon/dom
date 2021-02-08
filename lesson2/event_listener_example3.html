@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>example 3</title>
+    <meta charset="utf-8" />
+    <style>
+      body { padding: 1em; }
+      .example { border: dotted 2px blue; padding: .5em 1em;}
+      .example ul { border: dotted 2px red; padding: 1em;}
+      .example li { border: dotted 2px purple; padding: 1em; }
+      .example span { border: dotted 2px green; padding: 0.5em; }
+
+      div:hover, ul:hover, li:hover, span:hover {
+        border-style: solid;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="example">
+      <ul>
+        <li><span>First</span> element</li>
+        <li><span>Second</span> element</li>
+        <li><span>Third</span> element</li>
+      </ul>
+    </div>
+
+    <p>The last clicked element was: <span id="message">none</span>.</p>
+    <p>The element the event listener was attached to: <span id="message2">none</span>.</p>
+  </body>
+
+  <script>
+    // event delegation example
+    document.body.addEventListener('click', event => {
+      let elementClicked = event.target;
+      let elementAttached = event.currentTarget;
+      let p = document.getElementById('message');
+      p.textContent = elementClicked.tagName;
+      let p2 = document.getElementById('message2');
+      p2.textContent = elementAttached.tagName;
+    });
+  </script>
+</html>

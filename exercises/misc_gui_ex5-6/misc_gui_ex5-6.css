@@ -1,0 +1,93 @@
+/*
+* {
+  border: 1px solid red;
+}
+*/
+
+body {
+  box-sizing: border-box;
+}
+
+header {
+  color: white;
+  background-color: #e29921;
+  border-radius: 4px;
+  height: 100px;
+  margin-bottom: 25px;
+}
+
+header h1 {
+  margin-left: 20px;
+  padding: 20px 0 15px;
+  font-size: 1.5rem;
+}
+
+header div {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+header div p {
+  display: inline-block;
+  font-size: 1.0rem;
+}
+
+header div button,
+header div select {
+  color: white;
+  background-color: #e29921;
+  font-size: 0.9rem;
+  border: 1px solid white;
+  border-radius: 3px;
+}
+
+header div select {
+  width: 80px;
+  margin-left: 5px;
+  margin-right: 8px;
+  padding: 2px 0;
+}
+
+header div button {
+  text-align: center;
+  padding: 5px 10px;
+  margin-left: 20px;
+}
+
+main ul {
+  margin-left: 20px;
+}
+
+main li {
+  display: inline-block;
+  color: black;
+  background-color: white;
+  font-size: 1.0rem;
+  width: 200px;
+  /*height: 50px;*/
+  margin: 0 20px 15px 0;
+}
+
+main li * {
+  margin-top: 5px;
+}
+
+main li img {
+  width: 100%;
+}
+
+main li h2 {
+  display: inline-block;
+  font-weight: bold;
+}
+
+main li button {
+  color: white;
+  background-color: #e29921;
+  font-size: 1.0rem;
+  font-family: serif;
+  text-align: center;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}

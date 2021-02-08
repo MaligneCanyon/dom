@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Event Delegation Function</title>
+  </head>
+
+  <body>
+    <main>
+      <section>
+        <h1>Header</h1>
+        <p>Content</p>
+      </section>
+      <aside>
+        <h2>Sub Side Notes</h2>
+        <p>Note 1</p>
+        <p>Note 2</p>
+      </aside>
+    </main>
+    <nav>
+      <p>Side Note</p>
+    </nav>
+  </body>
+
+  <script>
+    // Solution:
+    // The fn doesn't "delegate events"; it still attaches the event listener to the parent
+    // elem; however, it only invokes the callback if the event target (ex. the clicked elem)
+    // is a descendant (inner) elem of the parent elem, and only if it matches a given selector.
+    // Note that, if the parent elem exists (and is infact an Element), the fn always rtns true,
+    // because addEventListener always rtns 'undefined', which when negated equals 'true';
+    // otherwise, the fn rtns 'undefined'.
+    function delegateEvent(parentElement, selector, eventType, callback) {
+      if (parentElement && parentElement instanceof Element) {
+        // console.log(`'${eventType}' eventListener added to ${parentElement.tagName}`);
+        return !parentElement.addEventListener(eventType, event => {
+          event.preventDefault();
+          // console.log(`'${eventType}' event fired on ${event.target.tagName}`);
+          const validTargets = Array.from(parentElement.querySelectorAll(selector));
+          if (validTargets.includes(event.target)) {
+            callback(event);
+          }
+        });
+      }
+    }
+
+    // Possible elements for use with the scenarios
+    const element0 = document.querySelector('section');
+    const element1 = document.querySelector('table');
+    const element2 = document.querySelector('main h1');
+    const element3 = document.querySelector('main');
+
+    // Possible callback for use with the scenarios
+    const callback = ({target, currentTarget}) => {
+      alert(`Target: ${target.tagName}\nCurrent Target: ${currentTarget.tagName}`);
+    };
+
+    // intro scenario
+    // console.log(delegateEvent(element0, 'p', 'click', callback)); //=> true // finds 'section'
+    // alerts =>
+    // Target: P
+    // Current Target: SECTION
+
+    // scenario 1
+    // console.log(delegateEvent(element1, 'p', 'click', callback)); //=> undefined // no <table> exists
+    // alerts => nothing
+
+    // scenario 2
+    // console.log(delegateEvent(element2, 'p', 'click', callback)); //=> true // finds 'main h1'
+    // alerts => nothing // 'main h1' doesn't have a descendant <p> tag
+
+    // scenario 3
+    // console.log(delegateEvent(element2, 'h1', 'click', callback)); //=> true // finds 'main h1'
+    // alerts => nothing // 'main h1' doesn't have a descendant <h1> tag
+
+    // scenario 4
+    // console.log(delegateEvent(element3, 'h1', 'click', callback)); //=> true // finds 'main'
+    // alerts =>
+    // Target: H1
+    // Current Target: MAIN
+
+    // scenario 5
+    // console.log(delegateEvent(element3, 'aside p', 'click', callback)); //=> true // finds 'main'
+    // alerts => // for either of the 'aside p' elems
+    // Target: P
+    // Current Target: MAIN
+
+    // scenario 6 (initially as per scenario 2)
+    const newP = document.createElement('P');
+    const oldPStyle = window.getComputedStyle(document.querySelector('main p'), null);
+    newP.style.fontSize = oldPStyle.fontSize;
+    newP.style.fontWeight = oldPStyle.fontWeight;
+    const newContent = document.createTextNode('New Paragraph');
+    newP.appendChild(newContent);
+    element2.appendChild(newP);
+    console.log(delegateEvent(element2, 'p', 'click', callback)); //=> true // finds 'main h1'
+    // alerts =>
+    // Target: P
+    // Current Target: H1
+  </script>
+</html>

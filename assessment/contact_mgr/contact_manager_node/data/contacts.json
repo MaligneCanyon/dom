@@ -1,0 +1,30 @@
+[
+  {
+    "full_name": "twoty-too",
+    "phone_number": "123456",
+    "email": "two@two.com",
+    "tags": "sales, fisss, catscratchers",
+    "id": 2
+  },
+  {
+    "full_name": "four",
+    "phone_number": "444444",
+    "email": "four@for.com",
+    "tags": "dog sales",
+    "id": 6
+  },
+  {
+    "full_name": "xi",
+    "phone_number": "121212121",
+    "email": "xi@chi.com",
+    "tags": "nine",
+    "id": 8
+  },
+  {
+    "full_name": "sev",
+    "phone_number": "777",
+    "email": "sev@sev.sev",
+    "tags": "seven, nine",
+    "id": 9
+  }
+]

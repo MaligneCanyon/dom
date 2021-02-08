@@ -1,0 +1,52 @@
+footer {
+  /*padding: 0 80px; n/r*/
+  /*margin: 0 auto; n/r, center horiz*/
+  background-color: #e7e7e7; /*lightgray*/
+}
+
+footer p {
+  padding: 80px 0 40px;
+  /*height: 104px; can't use height w/ padding*/
+  max-width: 560px;
+  color: #b2b2b2; /*gray*/
+}
+
+footer ul {
+  padding-bottom: 70px;
+  list-style-type: none;
+}
+
+footer li {
+  display: inline-block;
+  padding: 0 60px;
+}
+
+footer li a {
+  text-decoration: none;
+  color: white;
+  font-size: 26px;
+  font-weight: 800;
+
+  background: transparent url("../images/icons_social-media.png") 0 0 no-repeat;
+  display: block;
+  height: 46px;
+  width: 46px;
+  overflow: hidden;
+  text-indent: -8685px;
+}
+
+footer li a.twitter {
+  background-position: 0 0;
+}
+
+footer li a.facebook {
+  background-position: 0 -46px;
+}
+
+footer li a.email {
+  background-position: 0 -92px;
+}
+
+footer li a.instagram {
+  background-position: 0 -138px;
+}
